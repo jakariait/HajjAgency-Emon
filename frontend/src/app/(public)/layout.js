@@ -8,6 +8,7 @@ import {
   getHomePageTitle,
   getHomePageDescription,
 } from "@/utils/brand";
+import TopHeader from "@/components/TopHeader";
 
 export const metadata = {
   title: getHomePageTitle(),
@@ -18,6 +19,7 @@ export default function PublicLayout({ children }) {
   return (
     <>
       <GoogleTagManager /> {/* GTM handled in client component */}
+      <TopHeader />
       <Header />
       {children}
       <ScrollToTop />
