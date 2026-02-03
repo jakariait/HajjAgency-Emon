@@ -1,75 +1,10 @@
-"use client"
+"use client";
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { services } from "@/utils/services";
 
 const Services = () => {
-  const services = [
-    {
-      title: "ভিসা প্রসেসিং",
-      description:
-        "ভিসা আবেদন প্রক্রিয়া দ্রুত সম্পন্ন করি এবং ভিসা প্রসেসিং, যাত্রীর পাসপোর্ট ও প্রয়োজনীয় কাগজ নিরাপদে যাচাই করে আমরা নির্ভরযোগ্য ভিসা ডেলিভারি নিশ্চিত করি।",
-      buttonText: "ভিসা প্রসেসিং করতে যোগাযোগ করুন",
-      icon: (
-        <svg
-          className="w-12 h-12"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "এয়ার টিকিট বুকিং",
-      description:
-        "আমরা বিভিন্ন বিশ্বস্ত এয়ারলাইনের সঙ্গে সমন্বয় করে যাত্রীদের সুবিধাজনক সময় অনুযায়ী টিকিট বুক করি। সাশ্রয়ী ভাড়ায় সেরা ফ্লাইট অপশন বেছে নিতে আমরা সাহায্য করি।",
-      buttonText: "এয়ার টিকিট করতে যোগাযোগ করুন",
-      icon: (
-        <svg
-          className="w-12 h-12"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "মানসম্মত হোটেল",
-      description:
-        "কাবা শরীফ ও মসজিদে নববীর নিকটে পরিচ্ছন্ন, আরামদায়ক ও আধুনিক সুযোগ-সুবিধাসম্পন্ন হোটেলে থাকার ব্যবস্থা করা হয়, পাশাপাশি আপনি যেন মনোযোগ দিয়ে ইবাদত করতে পারেন—সেই পরিবেশ বিশ্বস্ততার সাথে আমরা নিশ্চিত করি।",
-      buttonText: "হোটেল পেতে যোগাযোগ করুন",
-      icon: (
-        <svg
-          className="w-12 h-12"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-          />
-        </svg>
-      ),
-    },
-  ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
