@@ -4,7 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/utils/services";
 
-const Services = () => {
+const Services = ({ selectedServices }) => {
+  const displayedServices = selectedServices
+    ? services.filter((service) => selectedServices.includes(service.title))
+    : services;
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -132,7 +135,7 @@ const Services = () => {
           initial="hidden"
           animate="show"
         >
-          {services.map((service, index) => (
+          {displayedServices.map((service, index) => (
             <motion.div
               key={index}
               className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 border-emerald-200/50 hover:border-amber-400/50"

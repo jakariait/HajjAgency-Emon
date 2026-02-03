@@ -5,8 +5,14 @@ import Services from "@/components/Service";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <HajjHero/>
-      <Services />
+      <HajjHero />
+      <Services
+        selectedServices={[
+          "ভিসা প্রসেসিং",
+          "এয়ার টিকিট বুকিং",
+          "মানসম্মত হোটেল",
+        ]}
+      />
     </main>
   );
 }
