@@ -7,7 +7,7 @@ const TopHeader = () => {
     <div className={"bg-primary px-4"}>
       <div
         className={
-          "xl:container xl:mx-auto py-2 flex items-center justify-between"
+          "xl:container xl:mx-auto py-2 flex flex-col md:flex-row gap-2 items-center justify-between"
         }
       >
         <ContactInfo />

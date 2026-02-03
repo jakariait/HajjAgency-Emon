@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function PublicLayout({ children }) {
   return (
-    <>
+    <div className={"overflow-hidden"}>
       <GoogleTagManager /> {/* GTM handled in client component */}
       <TopHeader />
       <Header />
@@ -25,6 +25,6 @@ export default function PublicLayout({ children }) {
       <ScrollToTop />
       <WhatsAppButton />
       <Footer />
-    </>
+    </div>
   );
 }

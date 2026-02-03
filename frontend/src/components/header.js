@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { getBrandLogo, getBrandName, getSlogan } from "@/utils/brand";
+import { getBrandLogo, getBrandName } from "@/utils/brand";
+import Registration from "@/components/Registration";
 
 const menuItems = [
   {
@@ -16,13 +17,12 @@ const menuItems = [
   {
     name: "Amazon",
     path: "/amazon",
-    // subItems: [
-    //   { name: "Amazon", path: "/amazon" },
-    //   { name: "Shopify", path: "/shopify" },
-    //   { name: "Meta", path: "/meta" },
-    // ],
+    subItems: [
+      { name: "Amazon", path: "/amazon" },
+      { name: "Shopify", path: "/shopify" },
+      { name: "Meta", path: "/meta" },
+    ],
   },
-  { name: "Success Story", path: "/success-story" },
   { name: "FAQs", path: "/faqs" },
   { name: "Contact Us", path: "/contact-us" },
   { name: "Blogs", path: "/blogs" },
@@ -192,6 +192,10 @@ export default function Header() {
           ))}
         </div>
 
+        <div className={"hidden md:flex items-center"}>
+          <Registration />
+        </div>
+
         {/* Mobile Hamburger */}
         <div className="flex lg:hidden">
           <button
@@ -317,6 +321,9 @@ export default function Header() {
               </div>
             ))}
           </nav>
+          <div className={"md:hidden"}>
+            <Registration />
+          </div>
         </div>
       </div>
     </nav>
