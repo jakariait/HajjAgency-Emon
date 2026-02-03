@@ -30,6 +30,7 @@ export default function MarketingHero() {
 
   return (
     <div className="relative  bg-gradient-to-br from-gray-50 via-white to-orange-50 overflow-hidden">
+      <h1 className={"text-primary"}>Jakaria</h1>
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
