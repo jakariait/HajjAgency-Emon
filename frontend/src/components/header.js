@@ -18,18 +18,13 @@ const menuItems = [
     name: "Packages",
     path: "/packages",
   },
-  // {
-  //   name: "Amazon",
-  //   path: "/amazon",
-  //   subItems: [
-  //     { name: "Amazon", path: "/amazon" },
-  //     { name: "Shopify", path: "/shopify" },
-  //     { name: "Meta", path: "/meta" },
-  //   ],
-  // },
-  { name: "FAQs", path: "/faqs" },
+  {
+    name: "About Us",
+    path: "/about-us",
+  },
+  // { name: "FAQs", path: "/faqs" },
   { name: "Contact Us", path: "/contact-us" },
-  { name: "Blogs", path: "/blogs" },
+  // { name: "Blogs", path: "/blogs" },
 ];
 
 export default function Header() {

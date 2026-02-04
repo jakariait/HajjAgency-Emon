@@ -15,7 +15,7 @@ export default function Home() {
         ]}
         isHomePage={true}
       />
-      <Packages/>
+      <Packages isHomePage={true} />
     </main>
   );
 }
