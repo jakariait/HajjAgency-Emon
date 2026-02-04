@@ -1,5 +1,3 @@
-import React from "react";
-
 export const services = [
   {
     title: "প্রি-রেজিস্ট্রেশন সহায়তা",

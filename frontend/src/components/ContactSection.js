@@ -2,7 +2,7 @@
 import React from "react";
 import { Mail, Phone, CheckCircle, MapPin } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
-import { getCalendlyLink, getWhatsApp } from "@/utils/brand";
+import {  getWhatsApp } from "@/utils/brand";
 import { gtmPushEvent } from "@/utils/gtm";
 
 const ContactSection = () => {
@@ -85,86 +85,9 @@ const ContactSection = () => {
               </div>
             </div>
 
-            {/* Why Choose Us */}
-            <div className="bg-black rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">
-                Why Choose Us?
-              </h3>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-orange-500" />
-                  <span className="text-white">
-                    500+ Successful Projects Delivered
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-orange-500" />
-                  <span className="text-white">
-                    $50M+ Revenue Generated for Clients
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-orange-500" />
-                  <span className="text-white">
-                    24/7 Dedicated Support Team
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-orange-500" />
-                  <span className="text-white">
-                    Free Strategy Session Included
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-orange-500" />
-                  <span className="text-white">
-                    ROI-Focused Growth Strategies
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-orange-500" />
-                  <span className="text-white">Money Back Guarantee</span>
-                </div>
-              </div>
-
-              <div className="mt-8 p-4 bg-orange-500 bg-opacity-10 rounded-lg border border-orange-500">
-                <a href={link} target="_blank" rel="noopener noreferrer">
-                  <p className="text-black font-semibold text-center cursor-pointer ">
-                    🚀 Ready to 10x your revenue? Let&apos;s talk!
-                  </p>
-                </a>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-12">
-          <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Ready to Scale Your Business?
-            </h3>
-            <p className="text-orange-100 mb-6">
-              Book a free 30-minute strategy call and discover how we can help
-              you achieve breakthrough growth.
-            </p>
-            <a
-              href={getCalendlyLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button
-                onClick={() =>
-                  handleClick("Schedule Free Consultation", getCalendlyLink())
-                }
-                className="bg-white text-orange-500 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors cursor-pointer"
-              >
-                Schedule Free Consultation
-              </button>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );
