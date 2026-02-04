@@ -15,14 +15,18 @@ const menuItems = [
     path: "/services",
   },
   {
-    name: "Amazon",
-    path: "/amazon",
-    subItems: [
-      { name: "Amazon", path: "/amazon" },
-      { name: "Shopify", path: "/shopify" },
-      { name: "Meta", path: "/meta" },
-    ],
+    name: "Packages",
+    path: "/packages",
   },
+  // {
+  //   name: "Amazon",
+  //   path: "/amazon",
+  //   subItems: [
+  //     { name: "Amazon", path: "/amazon" },
+  //     { name: "Shopify", path: "/shopify" },
+  //     { name: "Meta", path: "/meta" },
+  //   ],
+  // },
   { name: "FAQs", path: "/faqs" },
   { name: "Contact Us", path: "/contact-us" },
   { name: "Blogs", path: "/blogs" },

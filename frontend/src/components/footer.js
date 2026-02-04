@@ -23,7 +23,7 @@ const Footer = () => {
   const usefulLinks = [
     { label: "FAQs", href: "/faqs" },
     { label: "Guideline", href: "/guideline" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "Contact Us", href: "/contact-us" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms and Conditions", href: "/terms" },
   ];
