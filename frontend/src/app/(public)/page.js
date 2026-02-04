@@ -17,7 +17,7 @@ export default function Home() {
         isHomePage={true}
       />
       <Packages isHomePage={true} />
-      <Gallery />
+      <Gallery isHomePage={true} />
     </main>
   );
 }

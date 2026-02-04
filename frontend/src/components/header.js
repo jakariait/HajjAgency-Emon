@@ -22,9 +22,15 @@ const menuItems = [
     name: "About Us",
     path: "/about-us",
   },
-  // { name: "FAQs", path: "/faqs" },
+  {
+    name: "Gallery",
+    path: "/amazon",
+    subItems: [
+      { name: "Image Gallery", path: "/image-gallery" },
+      { name: "Video Gallery", path: "/video-gallery" },
+    ],
+  },
   { name: "Contact Us", path: "/contact-us" },
-  // { name: "Blogs", path: "/blogs" },
 ];
 
 export default function Header() {
@@ -163,7 +169,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center">
           {menuItems.map((item, idx) => (
             <div key={idx} className="relative">
               {item.subItems ? (
@@ -176,7 +182,7 @@ export default function Header() {
                     aria-expanded={openMenuIndex === idx}
                     aria-haspopup="true"
                   >
-                    <span className="relative z-10 flex items-center gap-1">
+                    <span className="relative z-10 flex items-center ">
                       {item.name}
                       <svg
                         className={`w-4 h-4 transition-transform duration-300 ${

@@ -3,9 +3,9 @@ import Link from "next/link";
 
 const Registration = () => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center w-44">
       <Link href="/registration">
-        <button className="group relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase cursor-pointer overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
+        <button className="group relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-2 py-3.5 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase cursor-pointer overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
           {/* Animated Background Pattern */}
           <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
