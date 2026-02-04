@@ -25,7 +25,7 @@ const Footer = () => {
     { label: "Guideline", href: "/guideline" },
     { label: "Contact Us", href: "/contact-us" },
     { label: "Privacy Policy", href: "/privacy-policy" },
-    { label: "Terms and Conditions", href: "/terms" },
+    { label: "Terms and Conditions", href: "/terms-and-conditions" },
   ];
 
   const phone = getPhoneNumber();

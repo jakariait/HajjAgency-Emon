@@ -1,12 +1,13 @@
 import React from "react";
+import Link from "next/link";
 import { getBrandName, getEmailAddress } from "@/utils/brand";
 
-const PrivacyPolicy = () => {
+const TermsCondition = () => {
   const email = getEmailAddress();
 
   const policySections = [
     {
-      title: "Introduction",
+      title: "Definitions",
       content: () => (
         <>
           <p>
@@ -290,7 +291,7 @@ We reserve the right to update this Privacy Policy at any time. The updated vers
 
           {/* Main Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-emerald-900 mb-4 relative inline-block">
-            Privacy Policy
+            Terms and Conditions
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500 rounded-full"></div>
           </h2>
 
@@ -309,8 +310,8 @@ We reserve the right to update this Privacy Policy at any time. The updated vers
               <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-amber-500/40 rounded-br"></div>
 
               <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                Thank you for visiting {getBrandName()}. Please read this
-                Privacy Policy carefully. By using our website or submitting
+                Thank you for visiting {getBrandName()}. Please read this Terms
+                and Conditions carefully. By using our website or submitting
                 your information to us, you consent to the practices described
                 herein.
               </p>
@@ -418,7 +419,7 @@ We reserve the right to update this Privacy Policy at any time. The updated vers
             <div className="relative bg-white p-6 rounded-xl shadow-lg border-2 border-emerald-200/50">
               <p className="text-gray-700 text-lg">
                 <strong className="text-emerald-900">
-                  Questions about your privacy?
+                  Questions about your Terms and Conditions?
                 </strong>
                 <br />
                 Contact us at:{" "}
@@ -440,8 +441,8 @@ We reserve the right to update this Privacy Policy at any time. The updated vers
                 {"February 4, 2026"}
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                We reserve the right to update this Privacy Policy at any time.
-                Please review this page periodically.
+                We reserve the right to update this Terms and Condition at any
+                time. Please review this page periodically.
               </p>
               <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-amber-400/40 rounded-tl"></div>
               <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-emerald-400/40 rounded-br"></div>
@@ -456,4 +457,4 @@ We reserve the right to update this Privacy Policy at any time. The updated vers
   );
 };
 
-export default PrivacyPolicy;
+export default TermsCondition;
