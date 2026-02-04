@@ -140,7 +140,7 @@ export default function Header() {
         </svg>
       </div>
 
-      <div className="relative xl:container xl:mx-auto flex justify-between py-1 md:py-4 items-center">
+      <div className="relative xl:container xl:mx-auto flex justify-between py-1 md:py-2 items-center">
         {/* Logo with Islamic Frame */}
         <Link href="/" className="flex items-center group">
           <div className="relative">

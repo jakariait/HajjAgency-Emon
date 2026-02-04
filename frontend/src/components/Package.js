@@ -1,8 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import {packages} from "@/utils/package";
+import {getEmailAddress, getPhoneNumber} from "@/utils/brand";
 
 const Packages = () => {
+
+  const phone = getPhoneNumber();
+
 
   return (
     <section className="relative py-20 px-4 bg-gradient-to-br from-white via-emerald-50/30 to-amber-50/30 overflow-hidden">
@@ -93,10 +97,10 @@ const Packages = () => {
                 হজ – ২০২৬ ও ২০২৭ সালের প্রাক-নিবন্ধন চলছে এবং প্রতি মাসের ওমরাহ
                 সময়সূচী জানতে যোগাযোগ করুন:
                 <a
-                  href="tel:+8801713261112"
+                  href={`tel:${phone}`}
                   className="font-bold ml-2 hover:text-amber-300 transition-colors duration-300"
                 >
-                  +880 1713 261112
+                  {phone}
                 </a>
               </p>
               {/* Decorative corners */}
@@ -238,7 +242,7 @@ const Packages = () => {
 
                 {/* Registration Button */}
                 <Link href="/registration">
-                  <button className="group/btn relative w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                  <button className="group/btn cursor-pointer relative w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
                     {/* Shimmer Effect */}
                     <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
@@ -300,7 +304,7 @@ const Packages = () => {
           </div>
 
           <Link href="/packages">
-            <button className="group relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
+            <button className="group cursor-pointer relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
               {/* Animated Background Pattern */}
               <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
                 <svg
