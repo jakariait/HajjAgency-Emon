@@ -10,222 +10,250 @@ const TermsCondition = () => {
       title: "Definitions",
       content: () => (
         <>
-          <p>
-            Hajj Express BD (“we”, “our”, “us”) is committed to protecting and
-            respecting your privacy. This Privacy Policy explains how we
-            collect, use, store, and disclose your personal information when you
-            interact with our website or use our services related to Hajj and
-            Umrah travel bookings.
+          <p className="mb-2">
+            “Company,” “we,” “us,” “our” refers to Hajj Express BD.
           </p>
-          <p className="mt-4">
-            We advise you to read this Privacy Policy carefully to understand
-            how your data is handled. By using our website or submitting your
-            information to us, you consent to the practices described herein.
+          <p className="mb-2">
+            “User,” “you,” “your” refers to the person using our website or
+            services.
+          </p>
+          <p className="mb-2">
+            “Service(s)” refers to Hajj and Umrah booking, visa processing,
+            transport, accommodation, and other related services provided by us.
+          </p>
+          <p className="mb-2">
+            “Website” refers to www.hajjexpressbd.com.
           </p>
         </>
       ),
     },
     {
-      title: "Information We Collect",
+      title: "Booking and Payment Policy",
       content: () => (
         <>
-          <p>
-            We collect various categories of personal and non-personal data
-            depending on how you interact with our services.
-          </p>
-
-          <h4 className="text-lg font-semibold text-emerald-800 mt-4 mb-2">
-            01. Personal Information
-          </h4>
           <p className="mb-2">
-            When you register, book, or inquire about Hajj or Umrah packages, we
-            may collect the following:
+            Bookings can be made online, over the phone, or in person.
           </p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Full name (as per passport)</li>
-            <li>Passport number, issue & expiry dates</li>
-            <li>National ID or Birth Certificate number</li>
-            <li>Date of birth</li>
-            <li>Gender</li>
-            <li>Marital status</li>
-            <li>Country of residence</li>
-            <li>Address (permanent and present)</li>
-            <li>Phone number and email address</li>
-            <li>Emergency contact details</li>
-            <li>Travel preferences and special requests</li>
-            <li>Copy of passport and photographs</li>
-          </ul>
-
-          <h4 className="text-lg font-semibold text-emerald-800 mt-4 mb-2">
-            02. Payment Information
-          </h4>
-          <p className="mb-2">We may collect or facilitate:</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Mobile banking details (e.g., bKash, Nagad)</li>
-            <li>Credit/debit card details</li>
-            <li>Bank transaction receipts (for manual bookings)</li>
-          </ul>
-          <p className="mt-2 text-sm text-gray-600">
-            Note: We do not store full credit/debit card numbers. All payments
-            are processed through secure third-party payment gateways.
-          </p>
-
-          <h4 className="text-lg font-semibold text-emerald-800 mt-4 mb-2">
-            03. Technical Information
-          </h4>
           <p className="mb-2">
-            Automatically collected data via cookies and analytics tools may
-            include:
+            A minimum deposit (as specified on each package) is required to
+            confirm your reservation.
           </p>
+          <p className="mb-2">
+            Full payment must be made within the specified timeline, typically
+            30 days before departure unless otherwise stated.
+          </p>
+          <p className="mb-2">
+            All prices are listed in Bangladeshi Taka (BDT) and are subject to
+            change based on currency fluctuations, fuel surcharges, or Saudi
+            policy changes.
+          </p>
+          <h4 className="text-lg font-semibold text-emerald-800 mt-4 mb-2">
+            Accepted Payment Methods:
+          </h4>
           <ul className="list-disc pl-5 space-y-1">
-            <li>IP address</li>
-            <li>Browser type and version</li>
-            <li>Device type and OS</li>
-            <li>Pages visited</li>
-            <li>Time spent on each page</li>
-            <li>Referring website or URL</li>
-            <li>Geographic location (approximate)</li>
+            <li>Bank Transfer</li>
+            <li>Mobile Banking (bKash/Nagad)</li>
+            <li>Credit/Debit Cards</li>
+            <li>Cash (in person)</li>
           </ul>
         </>
       ),
     },
     {
-      title: "How We Use Your Information",
+      title: "Travel Documents and Requirements",
       content: () => (
         <>
-          <p className="mb-2">We use your data to:</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Register and manage your Hajj/Umrah booking</li>
-            <li>Process and confirm travel itineraries</li>
-            <li>Fulfill legal requirements with Saudi and local authorities</li>
-            <li>Provide customer support and travel assistance</li>
-            <li>
-              Send administrative notifications (e.g., booking confirmations,
-              visa status)
-            </li>
-            <li>Send marketing communications (if you opt-in)</li>
-            <li>Improve website functionality and user experience</li>
-          </ul>
-
-          <h4 className="text-lg font-semibold text-emerald-800 mt-4 mb-2">
-            Legal Basis for Processing
-          </h4>
           <p className="mb-2">
-            We collect and process your data based on the following lawful
-            grounds under applicable laws:
+            You are solely responsible for ensuring the following:
           </p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Your explicit consent</li>
-            <li>To fulfill contractual obligations (e.g., booking services)</li>
+            <li>A valid passport with at least 6 months’ validity from travel date</li>
+            <li>Required vaccinations (e.g., Meningitis, COVID-19 if applicable)</li>
+            <li>Correct documentation for Hajj/Umrah as per Saudi Arabia’s Ministry of Hajj</li>
+            <li>Compliance with visa rules, health screening, and country-specific regulations</li>
+          </ul>
+          <p className="mt-2">
+            Failure to provide necessary documents may lead to denial of service
+            without refund.
+          </p>
+        </>
+      ),
+    },
+    {
+      title: "Cancellation and Refund Policy",
+      content: () => (
+        <>
+          <h4 className="text-lg font-semibold text-emerald-800 mt-4 mb-2">
+            By Client:
+          </h4>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Cancellations must be made in writing (email or letter).</li>
+            <li>Refund eligibility depends on the time of cancellation and payment stage.</li>
+            <li>Non-refundable fees include visa costs, flight penalties, and administrative charges.</li>
+          </ul>
+          <div className="overflow-x-auto mt-4">
+            <table className="min-w-full bg-white border border-gray-200">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Cancellation Timeframe</th>
+                  <th className="py-2 px-4 border-b">Refund Eligibility</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b">60+ Days before Departure</td>
+                  <td className="py-2 px-4 border-b">75% Refund</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">30 – 59 Days before Departure</td>
+                  <td className="py-2 px-4 border-b">50% Refund</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">Less than 30 Days</td>
+                  <td className="py-2 px-4 border-b">No Refund</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 className="text-lg font-semibold text-emerald-800 mt-4 mb-2">
+            By Company:
+          </h4>
+          <p className="mb-2">
+            We reserve the right to cancel any package due to unforeseen
+            circumstances (e.g., government restrictions, low participation,
+            pandemic), in which case a full or partial refund may be offered.
+          </p>
+        </>
+      ),
+    },
+    {
+      title: "Travel Insurance",
+      content: () => (
+        <>
+          <p className="mb-2">
+            We strongly recommend that all travelers obtain comprehensive travel
+            insurance to cover medical expenses, personal belongings, delays,
+            and cancellations. Hajj Express BD is not liable for any loss or
+            injury not directly caused by our negligence.
+          </p>
+        </>
+      ),
+    },
+    {
+      title: "Changes and Substitutions",
+      content: () => (
+        <>
+          <p className="mb-2">We reserve the right to:</p>
+          <ul className="list-disc pl-5 space-y-1">
             <li>
-              To comply with legal obligations (e.g., sharing data with Hajj
-              regulatory bodies)
+              Modify routes, hotels, flights, or schedules due to unforeseen
+              operational needs or external events.
             </li>
             <li>
-              For our legitimate interests in improving service quality and
-              security
+              Substitute services of similar or higher standard without
+              additional cost.
+            </li>
+            <li>
+              Adjust pricing if significant cost changes occur beyond our control
+              (e.g., airfare, visa fees).
             </li>
           </ul>
         </>
       ),
     },
     {
-      title: "Data Sharing & Disclosure",
+      title: "Code of Conduct and Behavior",
       content: () => (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<p class="mb-2">We do not sell or rent your data to any third parties. However, we may share information with:</p>
-<ul class="list-disc pl-5 space-y-1">
-  <li>Government Authorities: including the Ministry of Hajj & Umrah (KSA), MOFA, and Bangladesh Hajj Office</li>
-  <li>Third-party travel partners: airlines, hotels, transport providers</li>
-  <li>Payment processors: for secure financial transactions</li>
-  <li>IT service providers: hosting, analytics, and email delivery systems</li>
-</ul>
-<p class="mt-2 text-sm text-gray-600">All third parties are required to comply with data protection laws and confidentiality agreements.</p>`,
-          }}
-        />
+        <>
+          <p className="mb-2">All pilgrims are expected to:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Follow Islamic etiquette and Saudi laws</li>
+            <li>Obey instructions from group leaders and officials</li>
+            <li>Avoid disruptive behavior or illegal activities</li>
+            <li>Respect group timings and schedules</li>
+          </ul>
+          <p className="mt-2">
+            Hajj Express BD reserves the right to remove any individual from the
+            group for misconduct without refund.
+          </p>
+        </>
       ),
     },
     {
-      title: "Data Storage & Security",
+      title: "Limitation of Liability",
       content: () => (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<p class="mb-2">We use strong administrative, physical, and technical safeguards to protect your personal information:</p>
-<ul class="list-disc pl-5 space-y-1">
-  <li>SSL encryption for secure website communications</li>
-  <li>Firewall and malware protection</li>
-  <li>Secure servers with restricted access</li>
-  <li>Role-based access control for internal staff</li>
-  <li>Data retention policies to delete information no longer required</li>
-</ul>
-<p class="mt-2 text-sm text-gray-600">Your personal data is retained only as long as necessary to fulfill the purposes for which it was collected, or as required by law.</p>`,
-          }}
-        />
+        <>
+          <p className="mb-2">Hajj Express BD shall not be held responsible for:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Loss, damage, or theft of personal belongings</li>
+            <li>
+              Delays or disruptions due to airline strikes, natural disasters, or
+              political unrest
+            </li>
+            <li>
+              Acts beyond our control, including changes in Saudi policy
+            </li>
+            <li>
+              Any accident, injury, or death not caused directly by our
+              negligence
+            </li>
+          </ul>
+          <p className="mt-2">
+            Our maximum liability shall not exceed the total amount paid for the
+            affected service.
+          </p>
+        </>
       ),
     },
     {
-      title: "Your Rights",
+      title: "Intellectual Property",
       content: () => (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<p class="mb-2">As a data subject, you have the following rights:</p>
-<ul class="list-disc pl-5 space-y-1">
-  <li>Right to Access – Request a copy of the information we hold about you</li>
-  <li>Right to Correction – Request updates or corrections to your information</li>
-  <li>Right to Deletion – Request your data be erased under certain conditions</li>
-  <li>Right to Object – Object to processing your data for marketing purposes</li>
-  <li>Right to Withdraw Consent – You may withdraw your consent at any time</li>
-  <li>Right to Data Portability – Request transfer of your data to another provider</li>
-</ul>
-<p class="mt-2 text-sm text-gray-600">To exercise these rights, please email us at: contact @hajjexpressbd.com</p>`,
-          }}
-        />
+        <>
+          <p className="mb-2">
+            All content on our website, including text, images, logos, graphics,
+            and software, is the property of Hajj Express BD and protected by
+            copyright laws. Unauthorized use, copying, or reproduction is
+            strictly prohibited.
+          </p>
+        </>
       ),
     },
     {
-      title: "Cookies & Tracking",
+      title: "Privacy Policy",
       content: () => (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<p class="mb-2">We use cookies and similar tools to collect technical information and improve your browsing experience.</p>
-
-<h4 class="text-lg font-semibold text-emerald-800 mt-4 mb-2">Types of Cookies Used:</h4>
-<ul class="list-disc pl-5 space-y-1">
-  <li>Essential Cookies – Necessary for site functionality</li>
-  <li>Performance Cookies – Analyze site performance (e.g., Google Analytics)</li>
-  <li>Functional Cookies – Save your preferences</li>
-  <li>Marketing Cookies – Personalize offers and content (with consent)</li>
-</ul>
-<p class="mt-2 text-sm text-gray-600">You can manage or disable cookies through your browser settings.</p>
-
-<h4 class="text-lg font-semibold text-emerald-800 mt-4 mb-2">Third-Party Links</h4>
-<p class="mb-2">Our website may contain links to other sites. We are not responsible for the privacy practices of third-party websites. We recommend reviewing their policies before submitting any personal data.</p>`,
-          }}
-        />
+        <>
+          <p className="mb-2">
+            Your use of our website is also governed by our{" "}
+            <Link href="/privacy-policy" className="text-emerald-700 hover:underline">
+              Privacy Policy
+            </Link>
+            , which outlines how your personal data is collected and processed.
+          </p>
+        </>
       ),
     },
     {
-      title: "Children's Privacy",
+      title: "Governing Law",
       content: () => (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `Our services are not directed to individuals under the age of 18. We do not knowingly collect data from minors. If we become aware that a child has submitted personal data, we will delete it immediately.`,
-          }}
-        />
+        <>
+          <p className="mb-2">
+            These Terms are governed by the laws of the People’s Republic of
+            Bangladesh. Any disputes shall be subject to the exclusive
+            jurisdiction of the courts in Dhaka, Bangladesh.
+          </p>
+        </>
       ),
     },
     {
-      title: "International Transfers",
+      title: "Changes to Terms",
       content: () => (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `In the course of processing your Hajj and Umrah booking, your data may be transferred outside Bangladesh (e.g., to Saudi Arabia). We ensure such transfers are made securely and in accordance with applicable data protection laws.
-
-Policy Updates
-We reserve the right to update this Privacy Policy at any time. The updated version will be posted on our website with a revised “Effective Date”. We encourage you to review this page periodically.`,
-          }}
-        />
+        <>
+          <p className="mb-2">
+            We reserve the right to amend these Terms at any time. Continued use
+            of our services after such changes implies your acceptance of the
+            updated Terms. Please check this page periodically.
+          </p>
+        </>
       ),
     },
   ];
@@ -389,7 +417,7 @@ We reserve the right to update this Privacy Policy at any time. The updated vers
                 <div className="w-16 h-1 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full mb-4"></div>
 
                 {/* Description */}
-                <div className="text-gray-600 leading-relaxed mb-6 min-h-[140px]">
+                <div className="text-gray-600 leading-relaxed mb-6 ">
                   {section.content()}
                 </div>
               </div>

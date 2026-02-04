@@ -388,7 +388,7 @@ We reserve the right to update this Privacy Policy at any time. The updated vers
                 <div className="w-16 h-1 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full mb-4"></div>
 
                 {/* Description */}
-                <div className="text-gray-600 leading-relaxed mb-6 min-h-[140px]">
+                <div className="text-gray-600 leading-relaxed mb-6 ">
                   {section.content()}
                 </div>
               </div>
