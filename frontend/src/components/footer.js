@@ -22,7 +22,8 @@ const Footer = () => {
 
   const usefulLinks = [
     { label: "FAQs", href: "/faqs" },
-    { label: "Guideline", href: "/guideline" },
+    { label: "Image Gallery", href: "/image-gallery" },
+    { label: "Video Gallery", href: "/video-gallery" },
     { label: "Contact Us", href: "/contact-us" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms and Conditions", href: "/terms-and-conditions" },
