@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+html,
+body {
+  font-family: var(--font-tiro-bangla), var(--font-geist-sans), sans-serif;
+}
+
+
 @theme {
   --color-primary: #0E6C6E;
   --color-secondary: #D9A400;
