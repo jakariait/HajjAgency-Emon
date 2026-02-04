@@ -5,6 +5,6 @@ export const getBrandLogo = () => "/Hajj-Express-BD-Logo.webp";
 export const getWhatsApp = () => "8801743214111";
 export const getPhoneNumber = () => "+8801743214111";
 export const getEmailAddress = () => "demo@gmail.com";
-
-export const getCalendlyLink = () => "https://calendly.com/tessagency";
-export const getSlogan = () => "Hajj Express BD ";
+export const getLocation = () => "Champak Nagar, Cumilla Sadar - 3500, Cumilla";
+export const getFacebook = () => "https://www.facebook.com/";
+export const getYoutube = () => "https://www.youtube.com/";

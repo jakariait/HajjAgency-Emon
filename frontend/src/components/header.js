@@ -140,7 +140,7 @@ export default function Header() {
         </svg>
       </div>
 
-      <div className="relative xl:container xl:mx-auto flex justify-between py-4 items-center">
+      <div className="relative xl:container xl:mx-auto flex justify-between py-1 md:py-4 items-center">
         {/* Logo with Islamic Frame */}
         <Link href="/" className="flex items-center group">
           <div className="relative">
@@ -151,7 +151,7 @@ export default function Header() {
               <img
                 src={getBrandLogo()}
                 alt={getBrandName()}
-                className="w-40 cursor-pointer transition-transform duration-300 group-hover:scale-105"
+                className="w-30 md:w-40 cursor-pointer transition-transform duration-300 group-hover:scale-105"
               />
 
               {/* Decorative Corners */}

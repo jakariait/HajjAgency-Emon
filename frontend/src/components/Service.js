@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/utils/services";
 
-const Services = ({ selectedServices }) => {
+const Services = ({ selectedServices, isHomePage = false }) => {
   const displayedServices = selectedServices
     ? services.filter((service) => selectedServices.includes(service.title))
     : services;
@@ -212,7 +212,7 @@ const Services = ({ selectedServices }) => {
 
                 {/* Button */}
                 <Link href="/contact-us">
-                  <button className="group/btn relative w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-amber-500 hover:to-amber-600 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+                  <button className="group/btn cursor-pointer relative w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-amber-500 hover:to-amber-600 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                     {/* Shimmer Effect */}
                     <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
@@ -249,68 +249,72 @@ const Services = ({ selectedServices }) => {
             <div className="w-24 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
           </div>
 
-          <Link href="/services">
-            <button className="group relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
-              {/* Animated Background Pattern */}
-              <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
-                <svg
-                  width="100%"
-                  height="100%"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <defs>
-                    <pattern
-                      id="more-btn-pattern"
-                      x="0"
-                      y="0"
-                      width="40"
-                      height="40"
-                      patternUnits="userSpaceOnUse"
+          {isHomePage && (
+            <div>
+              <Link href="/services">
+                <button className="group cursor-pointer relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
+                  {/* Animated Background Pattern */}
+                  <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
+                    <svg
+                      width="100%"
+                      height="100%"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        d="M20 0 L30 10 L20 20 L10 10 Z"
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="0.5"
+                      <defs>
+                        <pattern
+                          id="more-btn-pattern"
+                          x="0"
+                          y="0"
+                          width="40"
+                          height="40"
+                          patternUnits="userSpaceOnUse"
+                        >
+                          <path
+                            d="M20 0 L30 10 L20 20 L10 10 Z"
+                            fill="none"
+                            stroke="white"
+                            strokeWidth="0.5"
+                          />
+                          <circle
+                            cx="20"
+                            cy="20"
+                            r="6"
+                            fill="none"
+                            stroke="white"
+                            strokeWidth="0.3"
+                          />
+                        </pattern>
+                      </defs>
+                      <rect
+                        width="100%"
+                        height="100%"
+                        fill="url(#more-btn-pattern)"
                       />
-                      <circle
-                        cx="20"
-                        cy="20"
-                        r="6"
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="0.3"
-                      />
-                    </pattern>
-                  </defs>
-                  <rect
-                    width="100%"
-                    height="100%"
-                    fill="url(#more-btn-pattern)"
-                  />
-                </svg>
-              </div>
+                    </svg>
+                  </div>
 
-              {/* Shimmer Effect */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                  {/* Shimmer Effect */}
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
-              {/* Button Text */}
-              <span className="relative z-10 flex items-center justify-center gap-3 text-lg">
-                <span className="w-2 h-2 rotate-45 bg-white/80 group-hover:rotate-[225deg] transition-transform duration-500"></span>
-                আমাদের আরো সেবাসমূহ দেখুন
-                <span className="w-2 h-2 rotate-45 bg-white/80 group-hover:rotate-[225deg] transition-transform duration-500"></span>
-              </span>
+                  {/* Button Text */}
+                  <span className="relative z-10 flex items-center justify-center gap-3 text-lg">
+                    <span className="w-2 h-2 rotate-45 bg-white/80 group-hover:rotate-[225deg] transition-transform duration-500"></span>
+                    আমাদের আরো সেবাসমূহ দেখুন
+                    <span className="w-2 h-2 rotate-45 bg-white/80 group-hover:rotate-[225deg] transition-transform duration-500"></span>
+                  </span>
 
-              {/* Decorative Corners */}
-              <div className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-white/40 rounded-tl transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
-              <div className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-white/40 rounded-tr transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
-              <div className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-white/40 rounded-bl transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
-              <div className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-white/40 rounded-br transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
+                  {/* Decorative Corners */}
+                  <div className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-white/40 rounded-tl transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
+                  <div className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-white/40 rounded-tr transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
+                  <div className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-white/40 rounded-bl transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
+                  <div className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-white/40 rounded-br transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
 
-              {/* Glow Effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
-          </Link>
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 

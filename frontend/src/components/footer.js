@@ -2,7 +2,13 @@ import React from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import SocialMediaLink from "@/components/SocialMediaLink";
 import Link from "next/link";
-import { getBrandLogo, getBrandName } from "@/utils/brand";
+import {
+  getBrandLogo,
+  getBrandName,
+  getEmailAddress,
+  getLocation,
+  getPhoneNumber,
+} from "@/utils/brand";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -22,17 +28,48 @@ const Footer = () => {
     { label: "Terms and Conditions", href: "/terms" },
   ];
 
+  const phone = getPhoneNumber();
+  const email = getEmailAddress();
+  const location = getLocation();
+
+  const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(location)}`;
+
   return (
     <footer className="relative bg-gradient-to-b from-emerald-900 via-emerald-800 to-emerald-950 text-white overflow-hidden">
       {/* Islamic Geometric Pattern Background */}
       <div className="absolute inset-0 opacity-5">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="islamic-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <path d="M50 0 L75 25 L50 50 L25 25 Z M50 50 L75 75 L50 100 L25 75 Z M0 25 L25 50 L0 75 L-25 50 Z M100 25 L125 50 L100 75 L75 50 Z"
-                    fill="none" stroke="white" strokeWidth="0.5"/>
-              <circle cx="50" cy="50" r="15" fill="none" stroke="white" strokeWidth="0.5"/>
-              <circle cx="50" cy="50" r="25" fill="none" stroke="white" strokeWidth="0.3"/>
+            <pattern
+              id="islamic-pattern"
+              x="0"
+              y="0"
+              width="100"
+              height="100"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M50 0 L75 25 L50 50 L25 25 Z M50 50 L75 75 L50 100 L25 75 Z M0 25 L25 50 L0 75 L-25 50 Z M100 25 L125 50 L100 75 L75 50 Z"
+                fill="none"
+                stroke="white"
+                strokeWidth="0.5"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="15"
+                fill="none"
+                stroke="white"
+                strokeWidth="0.5"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="25"
+                fill="none"
+                stroke="white"
+                strokeWidth="0.3"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#islamic-pattern)" />
@@ -44,9 +81,25 @@ const Footer = () => {
 
       {/* Decorative Geometric Border */}
       <div className="absolute top-2 left-0 right-0 flex justify-center">
-        <svg width="100%" height="30" xmlns="http://www.w3.org/2000/svg" className="opacity-20">
-          <pattern id="top-pattern" x="0" y="0" width="60" height="30" patternUnits="userSpaceOnUse">
-            <polygon points="30,0 45,15 30,30 15,15" fill="white" opacity="0.3"/>
+        <svg
+          width="100%"
+          height="30"
+          xmlns="http://www.w3.org/2000/svg"
+          className="opacity-20"
+        >
+          <pattern
+            id="top-pattern"
+            x="0"
+            y="0"
+            width="60"
+            height="30"
+            patternUnits="userSpaceOnUse"
+          >
+            <polygon
+              points="30,0 45,15 30,30 15,15"
+              fill="white"
+              opacity="0.3"
+            />
           </pattern>
           <rect width="100%" height="30" fill="url(#top-pattern)" />
         </svg>
@@ -134,7 +187,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <div className="relative inline-block mb-6">
+            <div className="relative inline-block mb-6 ">
               <h3 className="font-bold text-2xl text-amber-300 relative">
                 Contact Us
                 <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-transparent rounded"></span>
@@ -142,35 +195,35 @@ const Footer = () => {
             </div>
             <div className="flex flex-col gap-4">
               <a
-                href="tel:+8801713261112"
+                href={`tel:${phone}`}
                 className="group flex items-start gap-3 text-white/90 hover:text-amber-300 transition-all duration-300"
               >
-                <div className="mt-1 p-2 bg-emerald-700/50 rounded-lg group-hover:bg-amber-500/20 transition-colors duration-300">
+                <div className=" p-2 bg-emerald-700/50 rounded-lg group-hover:bg-amber-500/20 transition-colors duration-300">
                   <Phone className="w-4 h-4" />
                 </div>
-                <span className="flex-1">+880 1713 261112</span>
+                <span className="flex-1">{phone}</span>
               </a>
 
               <a
-                href="mailto:contact@hajjexpressbd.com"
+                href={`mailto:${email}`}
                 className="group flex items-start gap-3 text-white/90 hover:text-amber-300 transition-all duration-300"
               >
-                <div className="mt-1 p-2 bg-emerald-700/50 rounded-lg group-hover:bg-amber-500/20 transition-colors duration-300">
+                <div className="p-2 bg-emerald-700/50 rounded-lg group-hover:bg-amber-500/20 transition-colors duration-300">
                   <Mail className="w-4 h-4" />
                 </div>
-                <span className="flex-1">contact@hajjexpressbd.com</span>
+                <span className="flex-1">{email}</span>
               </a>
 
               <a
-                href="https://maps.google.com/?q=Champak+Nagar,+Cumilla"
+                href={mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-start gap-3 text-white/90 hover:text-amber-300 transition-all duration-300"
               >
                 <div className="mt-1 p-2 bg-emerald-700/50 rounded-lg group-hover:bg-amber-500/20 transition-colors duration-300">
                   <MapPin className="w-4 h-4" />
                 </div>
-                <span className="flex-1">
-                  Champak Nagar, Cumilla Sadar - 3500, Cumilla
-                </span>
+                <span className="flex-1">{location}</span>
               </a>
             </div>
           </div>
@@ -192,14 +245,24 @@ const Footer = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-white/70 text-sm">
             <div className="flex items-center gap-2">
               <span className="w-1 h-1 rounded-full bg-amber-400/50"></span>
-              <span>© {year} {getBrandName()}</span>
+              <span>
+                © {year} {getBrandName()}
+              </span>
               <span className="w-1 h-1 rounded-full bg-amber-400/50"></span>
             </div>
             <div className="hidden sm:block text-amber-400/30">•</div>
             <div className="flex items-center gap-2">
               <span>Created with</span>
-              <svg className="w-4 h-4 text-amber-400 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+              <svg
+                className="w-4 h-4 text-amber-400 animate-pulse"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clipRule="evenodd"
+                />
               </svg>
               <span>by</span>
               <a

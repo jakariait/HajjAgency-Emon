@@ -12,6 +12,7 @@ export default function Home() {
           "এয়ার টিকিট বুকিং",
           "মানসম্মত হোটেল",
         ]}
+        isHomePage={true}
       />
     </main>
   );

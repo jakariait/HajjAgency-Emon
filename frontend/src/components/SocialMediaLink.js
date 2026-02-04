@@ -1,15 +1,25 @@
 import React from "react";
 import { Facebook, MapPin } from "lucide-react";
 import { FaWhatsapp, FaYoutube } from "react-icons/fa";
-import { getWhatsApp } from "@/utils/brand";
+import {
+  getFacebook,
+  getLocation,
+  getWhatsApp,
+  getYoutube,
+} from "@/utils/brand";
 
 const SocialMediaLink = () => {
   const whatsapp = getWhatsApp();
+  const location = getLocation();
+  const facebook = getFacebook();
+  const youtube = getYoutube();
+
+  const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(location)}`;
 
   const socialLinks = [
     {
       icon: Facebook,
-      href: "https://www.facebook.com/tess.agency",
+      href: facebook,
       label: "Facebook",
     },
 
@@ -20,12 +30,12 @@ const SocialMediaLink = () => {
     },
     {
       icon: FaYoutube,
-      href: "https://www.youtube.com/@yourchannel",
+      href: youtube,
       label: "YouTube",
     },
     {
       icon: MapPin,
-      href: "https://maps.google.com/?q=Your+Location",
+      href: mapUrl,
       label: "Location",
     },
   ];
