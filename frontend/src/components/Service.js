@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/utils/services";
+import {getBrandName} from "@/utils/brand";
 
 const Services = ({ selectedServices, isHomePage = false }) => {
   const displayedServices = selectedServices
@@ -108,7 +109,7 @@ const Services = ({ selectedServices, isHomePage = false }) => {
               <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-amber-500/40 rounded-br"></div>
 
               <p className="text-gray-700 leading-relaxed text-lg">
-                Hajj Express BD হজ ও ওমরাহ যাত্রাকে সহজ, নিরাপদ ও সুশৃঙ্খল করতে
+                {getBrandName()} হজ ও ওমরাহ যাত্রাকে সহজ, নিরাপদ ও সুশৃঙ্খল করতে
                 প্রতিশ্রুতিবদ্ধ। আমরা প্রি-রেজিস্ট্রেশন, ভিসা, এয়ার টিকেট,
                 মানসম্পন্ন হোটেল, আরামদায়ক ট্রান্সপোর্ট, প্রতিদিন ৩ বেলা দেশীয়
                 খাবার, জিয়ারাহ এবং অভিজ্ঞ গাইডসহ সম্পূর্ণ প্যাকেজ সেবা দিয়ে

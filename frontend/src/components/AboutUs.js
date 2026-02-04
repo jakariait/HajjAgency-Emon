@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import LeaderShipMessage from "@/components/LeaderShipMessage";
+import {getBrandName} from "@/utils/brand";
 
 const AboutUs = () => {
   const services = [
@@ -121,7 +121,7 @@ const AboutUs = () => {
               {/* Description */}
               <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
                 <p>
-                  <strong className="text-emerald-900">Hajj Express BD</strong>{" "}
+                  <strong className="text-emerald-900">{getBrandName()}</strong>{" "}
                   একটি বিশ্বস্ত ও আন্তরিক প্রতিষ্ঠান, যা বাংলাদেশ থেকে হজ ও
                   ওমরাহ পালনে আগ্রহী মুসলমানদের জন্য নির্ভরযোগ্য সেবা নিশ্চিত
                   করতে প্রতিশ্রুতিবদ্ধ। আমরা অভিজ্ঞ গাইড, নির্ভরযোগ্য যাত্রা
@@ -278,7 +278,7 @@ const AboutUs = () => {
           <div className="max-w-4xl mx-auto">
             <div className="relative bg-white p-10 rounded-3xl shadow-2xl border-2 border-amber-400/50">
               <p className="text-gray-700 text-lg leading-relaxed text-center">
-                <strong className="text-emerald-900">Hajj Express BD</strong>{" "}
+                <strong className="text-emerald-900">{getBrandName()}</strong>{" "}
                 বাংলাদেশ সরকার, ধর্ম মন্ত্রণালয় এবং সৌদি আরবের সংশ্লিষ্ট
                 কর্তৃপক্ষের অনুমোদিত একটি লাইসেন্সপ্রাপ্ত হজ ও ওমরাহ
                 পরিচালনাকারী প্রতিষ্ঠান। আমাদের রয়েছে যথাযথ ট্রাভেল এজেন্সি

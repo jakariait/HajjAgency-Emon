@@ -2,6 +2,7 @@ import React from "react";
 import HajjHero from "@/components/HajjHero";
 import Services from "@/components/Service";
 import Packages from "@/components/Package";
+import Gallery from "@/components/Gallery";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         isHomePage={true}
       />
       <Packages isHomePage={true} />
+      <Gallery />
     </main>
   );
 }

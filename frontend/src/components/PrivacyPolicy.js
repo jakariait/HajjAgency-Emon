@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
       content: () => (
         <>
           <p>
-            Hajj Express BD (“we”, “our”, “us”) is committed to protecting and
+            {getBrandName()} (“we”, “our”, “us”) is committed to protecting and
             respecting your privacy. This Privacy Policy explains how we
             collect, use, store, and disclose your personal information when you
             interact with our website or use our services related to Hajj and

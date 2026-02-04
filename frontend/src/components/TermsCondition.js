@@ -11,7 +11,7 @@ const TermsCondition = () => {
       content: () => (
         <>
           <p className="mb-2">
-            “Company,” “we,” “us,” “our” refers to Hajj Express BD.
+            “Company,” “we,” “us,” “our” refers to {getBrandName()}.
           </p>
           <p className="mb-2">
             “User,” “you,” “your” refers to the person using our website or
@@ -133,7 +133,7 @@ const TermsCondition = () => {
           <p className="mb-2">
             We strongly recommend that all travelers obtain comprehensive travel
             insurance to cover medical expenses, personal belongings, delays,
-            and cancellations. Hajj Express BD is not liable for any loss or
+            and cancellations. {getBrandName()} is not liable for any loss or
             injury not directly caused by our negligence.
           </p>
         </>
@@ -173,7 +173,7 @@ const TermsCondition = () => {
             <li>Respect group timings and schedules</li>
           </ul>
           <p className="mt-2">
-            Hajj Express BD reserves the right to remove any individual from the
+            {getBrandName()} reserves the right to remove any individual from the
             group for misconduct without refund.
           </p>
         </>
@@ -183,7 +183,7 @@ const TermsCondition = () => {
       title: "Limitation of Liability",
       content: () => (
         <>
-          <p className="mb-2">Hajj Express BD shall not be held responsible for:</p>
+          <p className="mb-2">{getBrandName()} shall not be held responsible for:</p>
           <ul className="list-disc pl-5 space-y-1">
             <li>Loss, damage, or theft of personal belongings</li>
             <li>
@@ -211,7 +211,7 @@ const TermsCondition = () => {
         <>
           <p className="mb-2">
             All content on our website, including text, images, logos, graphics,
-            and software, is the property of Hajj Express BD and protected by
+            and software, is the property of {getBrandName()} and protected by
             copyright laws. Unauthorized use, copying, or reproduction is
             strictly prohibited.
           </p>
