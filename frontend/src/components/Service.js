@@ -13,8 +13,26 @@ const Services = ({ selectedServices, isHomePage = false }) => {
     ? services.filter((service) => selectedServices.includes(service.title))
     : services;
 
+  // Variants for the overall content container
+  const contentContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1, // Stagger delay for all direct children
+        delayChildren: 0.3, // Delay before children start animating
+      },
+    },
+  };
+
+  // Variants for individual fade-up items (text, buttons, etc.)
+  const fadeUpItemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
   // Variants for the main services grid container
-  const containerVariants = {
+  const gridContainerVariants = {
     hidden: { opacity: 0, y: 20 },
     show: {
       opacity: 1,
@@ -28,7 +46,7 @@ const Services = ({ selectedServices, isHomePage = false }) => {
   };
 
   // Variants for individual service cards
-  const itemVariants = {
+  const gridItemVariants = {
     hidden: { opacity: 0, y: 50 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
@@ -83,11 +101,19 @@ const Services = ({ selectedServices, isHomePage = false }) => {
       {/* Decorative Top Border */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
 
-      <div className="relative xl:container xl:mx-auto">
+      <motion.div
+        className="relative xl:container xl:mx-auto"
+        variants={contentContainerVariants}
+        initial="hidden"
+        animate={isVisible ? "show" : "hidden"}
+      >
         {/* Section Header */}
         <div className="text-center mb-16">
           {/* Decorative Top Element */}
-          <div className="flex items-center justify-center gap-3 mb-6">
+          <motion.div
+            className="flex items-center justify-center gap-3 mb-6"
+            variants={fadeUpItemVariants}
+          >
             <div className="w-12 h-px bg-gradient-to-r from-transparent to-emerald-400"></div>
             <div className="w-2 h-2 rotate-45 bg-amber-500"></div>
             <div className="w-16 h-px bg-gradient-to-r from-emerald-400 to-amber-400"></div>
@@ -95,21 +121,29 @@ const Services = ({ selectedServices, isHomePage = false }) => {
             <div className="w-16 h-px bg-gradient-to-r from-amber-400 to-emerald-400"></div>
             <div className="w-2 h-2 rotate-45 bg-amber-500"></div>
             <div className="w-12 h-px bg-gradient-to-r from-emerald-400 to-transparent"></div>
-          </div>
-
+          </motion.div>
           {/* Main Heading */}
-          <h2 className="text-4xl md:text-5xl font-bold text-emerald-900 mb-4 relative inline-block">
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold text-emerald-900 mb-4 relative inline-block"
+            variants={fadeUpItemVariants}
+          >
             আমাদের সেবা সমূহ
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500 rounded-full"></div>
-          </h2>
+          </motion.h2>
 
           {/* Subheading */}
-          <p className="text-xl md:text-2xl text-amber-700 font-semibold mt-8 mb-4">
+          <motion.p
+            className="text-xl md:text-2xl text-amber-700 font-semibold mt-8 mb-4"
+            variants={fadeUpItemVariants}
+          >
             বিশ্বাসের সঙ্গে সেবা, আন্তরিকতার সঙ্গে প্রস্তুতি
-          </p>
+          </motion.p>
 
           {/* Description */}
-          <div className="max-w-4xl mx-auto mt-8">
+          <motion.div
+            className="max-w-4xl mx-auto mt-8"
+            variants={fadeUpItemVariants}
+          >
             <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border-2 border-emerald-200/50">
               {/* Decorative Corners */}
               <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-emerald-500/40 rounded-tl"></div>
@@ -126,22 +160,25 @@ const Services = ({ selectedServices, isHomePage = false }) => {
                 হোক প্রশান্তিময়। সব আয়োজনের দায়িত্ব আমাদের। ইন-শা-আল্লাহ।
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Decorative Divider */}
-          <div className="flex items-center justify-center gap-3 mt-12">
+          <motion.div
+            className="flex items-center justify-center gap-3 mt-12"
+            variants={fadeUpItemVariants}
+          >
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-emerald-300"></div>
             <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
             <div className="w-2 h-2 rotate-45 bg-amber-400"></div>
             <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
             <div className="w-16 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Services Grid */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
-          variants={containerVariants}
+          variants={gridContainerVariants}
           initial="hidden"
           animate="show"
         >
@@ -149,7 +186,7 @@ const Services = ({ selectedServices, isHomePage = false }) => {
             <motion.div
               key={index}
               className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 border-emerald-200/50 hover:border-amber-400/50"
-              variants={itemVariants}
+              variants={gridItemVariants}
             >
               {/* Decorative Background Pattern */}
               <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300">
@@ -251,16 +288,19 @@ const Services = ({ selectedServices, isHomePage = false }) => {
         {/* View More Services Button */}
         <div className="text-center">
           {/* Decorative Divider */}
-          <div className="flex items-center justify-center gap-3 mb-8">
+          <motion.div
+            className="flex items-center justify-center gap-3 mb-8"
+            variants={fadeUpItemVariants}
+          >
             <div className="w-24 h-px bg-gradient-to-r from-transparent to-emerald-300"></div>
             <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
             <div className="w-3 h-3 rotate-45 bg-amber-500"></div>
             <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
             <div className="w-24 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
-          </div>
+          </motion.div>
 
           {isHomePage && (
-            <div>
+            <motion.div variants={fadeUpItemVariants}>
               <Link href="/services">
                 <button className="group cursor-pointer relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
                   {/* Animated Background Pattern */}
@@ -323,12 +363,10 @@ const Services = ({ selectedServices, isHomePage = false }) => {
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
               </Link>
-            </div>
+            </motion.div>
           )}
         </div>
-      </div>
-
-      {/* Decorative Bottom Border */}
+      </motion.div>
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
     </motion.section>
   );
