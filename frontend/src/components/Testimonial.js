@@ -2,8 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const Testimonials = () => {
-  const [visibleCards, setVisibleCards] = useState([]);
-  const cardsRef = useRef([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const autoSlideTimeoutRef = useRef(null);
+  const carouselRef = useRef(null);
   const testimonials = [
     {
       name: "মোঃ রেজাউল করিম",
@@ -49,28 +51,72 @@ const Testimonials = () => {
     },
   ];
 
-  // Scroll animation effect
+  const [testimonialsPerView, setTestimonialsPerView] = useState(3); // Default to 3 for larger screens
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = cardsRef.current.indexOf(entry.target);
-            if (!visibleCards.includes(index)) {
-              setVisibleCards((prev) => [...prev, index]);
-            }
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
+    const handleResize = () => {
+      const newTestimonialsPerView = window.innerWidth < 768 ? 1 : 3;
+      if (newTestimonialsPerView !== testimonialsPerView) {
+        setTestimonialsPerView(newTestimonialsPerView);
+        setCurrentIndex(0); // Reset currentIndex when testimonialsPerView changes
+      }
+    };
 
-    cardsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
+    handleResize(); // Set initial value
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [testimonialsPerView]);
 
-    return () => observer.disconnect();
-  }, [visibleCards]);
+  const scrollToCurrentIndex = (index) => {
+    if (carouselRef.current) {
+      const offset = (index / testimonialsPerView) * 100;
+      carouselRef.current.style.transform = `translateX(-${offset}%)`;
+    }
+  };
+
+  const handleNext = () => {
+    const newIndex = (currentIndex + testimonialsPerView) % testimonials.length;
+    setCurrentIndex(newIndex);
+    setIsPaused(true);
+    if (autoSlideTimeoutRef.current) {
+      clearTimeout(autoSlideTimeoutRef.current);
+    }
+    autoSlideTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 5000);
+  };
+
+  const handlePrev = () => {
+    const totalGroups = Math.ceil(testimonials.length / testimonialsPerView);
+    const currentGroup = Math.floor(currentIndex / testimonialsPerView);
+    const newGroup = (currentGroup - 1 + totalGroups) % totalGroups;
+    const newIndex = newGroup * testimonialsPerView;
+    setCurrentIndex(newIndex);
+    setIsPaused(true);
+    if (autoSlideTimeoutRef.current) {
+      clearTimeout(autoSlideTimeoutRef.current);
+    }
+    autoSlideTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    scrollToCurrentIndex(currentIndex);
+  }, [currentIndex, testimonialsPerView]); // Added testimonialsPerView as a dependency
+
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentIndex(
+          (prevIndex) =>
+            (prevIndex + testimonialsPerView) % testimonials.length,
+        );
+      }, 7000);
+      return () => clearInterval(interval);
+    }
+    return () => {};
+  }, [isPaused, testimonials.length, testimonialsPerView]);
 
   return (
     <section className="relative py-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50 overflow-hidden">
@@ -180,149 +226,199 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 border-emerald-200/50 hover:border-amber-400/50 transform ${
-                visibleCards.includes(index)
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-12"
-              }`}
-              style={{
-                transitionDelay: `${index * 150}ms`,
-              }}
-            >
-              {/* Decorative Background Pattern */}
-              <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300">
-                <svg
-                  width="100%"
-                  height="100%"
-                  xmlns="http://www.w3.org/2000/svg"
+        {/* Testimonials Carousel */}
+        <div className="relative mt-12 overflow-hidden">
+          <div
+            ref={carouselRef}
+            className="flex transition-transform duration-500 ease-in-out"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            style={{
+              width: `${(testimonials.length / testimonialsPerView) * 100}%`,
+            }}
+          >
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="flex-none px-2"
+                style={{ flexBasis: `calc(100% / ${testimonialsPerView})` }}
+              >
+                {" "}
+                <div
+                  className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 border-emerald-200/50 hover:border-amber-400/50 transform`}
                 >
-                  <defs>
-                    <pattern
-                      id={`card-pattern-${index}`}
-                      x="0"
-                      y="0"
-                      width="60"
-                      height="60"
-                      patternUnits="userSpaceOnUse"
-                    >
-                      <path
-                        d="M30 0 L45 15 L30 30 L15 15 Z"
-                        fill="none"
-                        stroke="#059669"
-                        strokeWidth="0.5"
-                      />
-                      <circle
-                        cx="30"
-                        cy="30"
-                        r="10"
-                        fill="none"
-                        stroke="#059669"
-                        strokeWidth="0.3"
-                      />
-                    </pattern>
-                  </defs>
-                  <rect
-                    width="100%"
-                    height="100%"
-                    fill={`url(#card-pattern-${index})`}
-                  />
-                </svg>
-              </div>
-
-              {/* Top Decorative Border - Animated Shimmer */}
-              <div className="relative h-2 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
-              </div>
-
-              {/* Content */}
-              <div className="relative p-8">
-                {/* Quote Icon */}
-                <div className="relative mb-6">
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-amber-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 animate-pulse-slow"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 animate-float">
+                  {/* Decorative Background Pattern */}
+                  <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300">
                     <svg
-                      className="w-8 h-8 group-hover:scale-110 transition-transform duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
+                      width="100%"
+                      height="100%"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                    {/* Decorative Corners on Icon */}
-                    <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-white/50 rounded-tl group-hover:w-4 group-hover:h-4 transition-all duration-300"></div>
-                    <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 border-white/50 rounded-br group-hover:w-4 group-hover:h-4 transition-all duration-300"></div>
-                  </div>
-                </div>
-
-                {/* Category */}
-                <div className="mb-4">
-                  <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-emerald-100 to-amber-100 text-emerald-800 text-sm font-semibold rounded-full border border-emerald-300/30 hover:scale-105 transition-transform duration-300 animate-badge-slide">
-                    {testimonial.category}
-                  </span>
-                </div>
-
-                {/* Decorative Line */}
-                <div className="w-16 h-1 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full mb-6"></div>
-
-                {/* Review Text */}
-                <p className="text-gray-700 leading-relaxed mb-6 min-h-[160px]">
-                  "{testimonial.review}"
-                </p>
-
-                {/* Customer Info */}
-                <div className="border-t-2 border-emerald-200/50 pt-6">
-                  <div className="flex items-center gap-3">
-                    {/* Avatar */}
-                    <div className="relative w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 animate-pulse-slow">
-                      {testimonial.name.charAt(0)}
-                      <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white/40 rounded-tl group-hover:border-white/60 transition-colors duration-300"></div>
-                    </div>
-
-                    {/* Name & Location */}
-                    <div>
-                      <h4 className="font-bold text-emerald-900 text-lg">
-                        {testimonial.name}
-                      </h4>
-                      <p className="text-amber-600 text-sm flex items-center gap-1">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                      <defs>
+                        <pattern
+                          id={`card-pattern-${index}`}
+                          x="0"
+                          y="0"
+                          width="60"
+                          height="60"
+                          patternUnits="userSpaceOnUse"
                         >
                           <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            d="M30 0 L45 15 L30 30 L15 15 Z"
+                            fill="none"
+                            stroke="#059669"
+                            strokeWidth="0.5"
                           />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                          <circle
+                            cx="30"
+                            cy="30"
+                            r="10"
+                            fill="none"
+                            stroke="#059669"
+                            strokeWidth="0.3"
                           />
+                        </pattern>
+                      </defs>
+                      <rect
+                        width="100%"
+                        height="100%"
+                        fill={`url(#card-pattern-${index})`}
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Top Decorative Border - Animated Shimmer */}
+                  <div className="relative h-2 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="relative p-8">
+                    {/* Quote Icon */}
+                    <div className="relative mb-6">
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-amber-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 animate-pulse-slow"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 animate-float">
+                        <svg
+                          className="w-8 h-8 group-hover:scale-110 transition-transform duration-300"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                         </svg>
-                        {testimonial.location}
-                      </p>
+                        {/* Decorative Corners on Icon */}
+                        <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-white/50 rounded-tl group-hover:w-4 group-hover:h-4 transition-all duration-300"></div>
+                        <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 border-white/50 rounded-br group-hover:w-4 group-hover:h-4 transition-all duration-300"></div>
+                      </div>
+                    </div>
+
+                    {/* Category */}
+                    <div className="mb-4">
+                      <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-emerald-100 to-amber-100 text-emerald-800 text-sm font-semibold rounded-full border border-emerald-300/30 hover:scale-105 transition-transform duration-300 animate-badge-slide">
+                        {testimonial.category}
+                      </span>
+                    </div>
+
+                    {/* Decorative Line */}
+                    <div className="w-16 h-1 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full mb-6"></div>
+
+                    {/* Review Text */}
+                    <p className="text-gray-700 leading-relaxed mb-6 min-h-[160px]">
+                      "{testimonial.review}"
+                    </p>
+
+                    {/* Customer Info */}
+                    <div className="border-t-2 border-emerald-200/50 pt-6">
+                      <div className="flex items-center gap-3">
+                        {/* Avatar */}
+                        <div className="relative w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 animate-pulse-slow">
+                          {testimonial.name.charAt(0)}
+                          <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white/40 rounded-tl group-hover:border-white/60 transition-colors duration-300"></div>
+                        </div>
+
+                        {/* Name & Location */}
+                        <div>
+                          <h4 className="font-bold text-emerald-900 text-lg">
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-amber-600 text-sm flex items-center gap-1">
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                            </svg>
+                            {testimonial.location}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  {/* Card Decorative Corners */}
+                  <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-emerald-300/30 rounded-tl group-hover:border-amber-400/50 transition-colors duration-300"></div>
+                  <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-emerald-300/30 rounded-tr group-hover:border-amber-400/50 transition-colors duration-300"></div>
+                  <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-emerald-300/30 rounded-bl group-hover:border-amber-400/50 transition-colors duration-300"></div>
+                  <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-emerald-300/30 rounded-br group-hover:border-amber-400/50 transition-colors duration-300"></div>
                 </div>
               </div>
+            ))}
+          </div>
 
-              {/* Card Decorative Corners */}
-              <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-emerald-300/30 rounded-tl group-hover:border-amber-400/50 transition-colors duration-300"></div>
-              <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-emerald-300/30 rounded-tr group-hover:border-amber-400/50 transition-colors duration-300"></div>
-              <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-emerald-300/30 rounded-bl group-hover:border-amber-400/50 transition-colors duration-300"></div>
-              <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-emerald-300/30 rounded-br group-hover:border-amber-400/50 transition-colors duration-300"></div>
-            </div>
-          ))}
+          {/* Navigation Buttons */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full shadow-lg hover:bg-emerald-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-400 z-10"
+            aria-label="Previous testimonials"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full shadow-lg hover:bg-emerald-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-400 z-10"
+            aria-label="Next testimonials"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </button>
         </div>
       </div>
 
