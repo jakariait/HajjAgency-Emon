@@ -4,31 +4,40 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/utils/services";
 import { getBrandName } from "@/utils/brand";
+import { useEntranceAnimation } from "@/hooks/useEntranceAnimation";
 
 const Services = ({ selectedServices, isHomePage = false }) => {
+  const isVisible = useEntranceAnimation(300); // Add a small delay for the section itself
+
   const displayedServices = selectedServices
     ? services.filter((service) => selectedServices.includes(service.title))
     : services;
+
+  // Variants for the main services grid container
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     show: {
       opacity: 1,
+      y: 0,
       transition: {
-        staggerChildren: 0.2,
+        duration: 0.8, // Duration for the container itself
+        staggerChildren: 0.1, // Stagger delay for children (individual service cards)
+        delayChildren: 0.3, // Delay before children start animating
       },
     },
   };
 
+  // Variants for individual service cards
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   return (
     <motion.section
       initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 1 }} // Overall section entrance duration
       className="relative py-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50 overflow-hidden"
     >
       {/* Background Islamic Pattern */}

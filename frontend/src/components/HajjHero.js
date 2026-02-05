@@ -1,13 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEntranceAnimation } from "../hooks/useEntranceAnimation";
+import Link from "next/link";
 
 export default function HajjHero() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const isVisible = useEntranceAnimation();
 
   return (
     <section className="relative pt-10 pb-30 w-full overflow-hidden flex items-center justify-center">
@@ -112,17 +109,22 @@ export default function HajjHero() {
 
         {/* CTA Buttons */}
         <div
-          className={`flex gap-6 justify-center flex-wrap transition-all duration-1000 delay-1100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`flex gap-6 justify-center flex-wrap transition-all duration-1000 delay-[1100ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
-          <button className="group relative px-12 py-4 text-xl font-semibold font-noto-serif-bengali rounded-full bg-gradient-to-r from-amber-400 to-yellow-600 text-black overflow-hidden shadow-[0_8px_30px_rgba(212,175,55,0.4)] hover:shadow-[0_12px_40px_rgba(212,175,55,0.6)] transition-all duration-300 hover:-translate-y-1">
-            <span className="absolute inset-0 w-0 h-0 rounded-full bg-white/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 group-hover:w-[400px] group-hover:h-[400px]" />
-            <span className="relative z-10">হজ্জ প্যাকেজ দেখুন</span>
-          </button>
+          <Link href="/packages">
+            {" "}
+            <button className="group cursor-pointer relative px-12 py-4 text-xl font-semibold font-noto-serif-bengali rounded-full bg-gradient-to-r from-amber-400 to-yellow-600 text-black overflow-hidden shadow-[0_8px_30px_rgba(212,175,55,0.4)] hover:shadow-[0_12px_40px_rgba(212,175,55,0.6)] transition-all duration-300 hover:-translate-y-1">
+              <span className="absolute inset-0 w-0 h-0 rounded-full bg-white/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 group-hover:w-[400px] group-hover:h-[400px]" />
+              <span className="relative z-10">হজ্জ প্যাকেজ দেখুন</span>
+            </button>
+          </Link>
 
-          <button className="group relative px-12 py-4 text-xl font-semibold font-noto-serif-bengali rounded-full bg-transparent text-white border-2 border-amber-400 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgba(212,175,55,0.3)] hover:bg-amber-400/15 transition-all duration-300 hover:-translate-y-1">
-            <span className="absolute inset-0 w-0 h-0 rounded-full bg-white/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 group-hover:w-[400px] group-hover:h-[400px]" />
-            <span className="relative z-10">যোগাযোগ করুন</span>
-          </button>
+          <Link href="/contact-us">
+            <button className="group cursor-pointer relative px-12 py-4 text-xl font-semibold font-noto-serif-bengali rounded-full bg-transparent text-white border-2 border-amber-400 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgba(212,175,55,0.3)] hover:bg-amber-400/15 transition-all duration-300 hover:-translate-y-1">
+              <span className="absolute inset-0 w-0 h-0 rounded-full bg-white/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 group-hover:w-[400px] group-hover:h-[400px]" />
+              <span className="relative z-10">যোগাযোগ করুন</span>
+            </button>
+          </Link>
         </div>
       </div>
 
