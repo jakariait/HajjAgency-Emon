@@ -570,7 +570,6 @@ const Packages = ({ isHomePage = false }) => {
                   </motion.ul>
 
                   {/* Note */}
-                  {pkg.note && (
                     <motion.div
                       className="mb-6 p-3 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg"
                       initial={{ opacity: 0, x: -20 }}
@@ -578,9 +577,8 @@ const Packages = ({ isHomePage = false }) => {
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: index * 0.1 + 0.8 }}
                     >
-                      <p className="text-xs text-gray-600 italic">{pkg.note}</p>
+                      <p className="text-xs text-gray-600 italic">বিঃ দ্রঃ পরিবর্তিত পরিস্থিতিতে প্যাকেজ পরিবর্তনযোগ্য</p>
                     </motion.div>
-                  )}
 
                   {/* Registration Button */}
                   <motion.div
