@@ -11,7 +11,6 @@ const Testimonials = () => {
       category: "প্রশিক্ষণ ও গাইডেন্সে সন্তুষ্ট",
       review:
         "হজের আগে তাদের দেওয়া ট্রেনিং সেশনগুলো আমাকে অনেক আত্মবিশ্বাস দিয়েছে। কোন জায়গায় কী করতে হবে—সব বিস্তারিতভাবে বুঝিয়ে দিয়েছে। সৌদি আরবে যাত্রার সময় গাইডরাও খুবই আন্তরিক ছিলেন। আমি সত্যিই কৃতজ্ঞ।",
-      rating: 5,
     },
     {
       name: "মুন্নি আক্তার",
@@ -19,7 +18,6 @@ const Testimonials = () => {
       category: "সময়মতো সার্ভিস, সুন্দর ব্যবস্থাপনা",
       review:
         "Hajj Express BD - এর সময়ানুবর্তিতা ও মানসম্মত সেবায় আমি মুগ্ধ। মিনায় তাঁবু, মক্কা-মদিনায় হোটেল—সব জায়গায় ভালো ব্যবস্থা পেয়েছি। তাদের মাধ্যমে হজ করা ছিল সত্যিই প্রশান্তির।",
-      rating: 5,
     },
     {
       name: "জান্নাতুল ফেরদৌস",
@@ -27,7 +25,6 @@ const Testimonials = () => {
       category: "আল্লাহর ঘরে পৌঁছাতে সেরা সাথী",
       review:
         "আমি বহু এজেন্সির খোঁজ করেছি, কিন্তু Hajj Express BD সবচেয়ে স্বচ্ছ ও বিশ্বস্ত মনে হয়েছে। তারা কথা রাখে। আমার জীবনের সবচেয়ে গুরুত্বপূর্ণ সফরকে এত সহজ ও স্মরণীয় করে তোলার জন্য ধন্যবাদ।",
-      rating: 5,
     },
     {
       name: "মোঃ শরীফুল ইসলাম",
@@ -35,7 +32,6 @@ const Testimonials = () => {
       category: "সফল হজ যাত্রা",
       review:
         "আমি ২০২৪ সালে Hajj Express BD এর মাধ্যমে হজ করেছি। শুরু থেকে শেষ পর্যন্ত তারা অসাধারণ সহযোগিতা করেছে। গাইড, হোটেল, খাবার—সবকিছু খুবই মানসম্মত ছিল। আলহামদুলিল্লাহ, শান্তিপূর্ণ হজ করতে পেরেছি। আল্লাহ তাদের উত্তম প্রতিদান দিন।",
-      rating: 5,
     },
     {
       name: "সাবিহা আফরিন",
@@ -43,7 +39,6 @@ const Testimonials = () => {
       category: "পেশাদার ও বিশ্বস্ত এজেন্সি",
       review:
         "আমি ও আমার পরিবার ওমরাহ করেছি এই এজেন্সির মাধ্যমে। ভিসা প্রসেস থেকে শুরু করে প্রতিটি ধাপ খুবই দ্রুত ও পেশাদারভাবে সম্পন্ন হয়েছে। তারা সবকিছু খুব পরিষ্কারভাবে বুঝিয়ে দেয়, কোন লুকানো খরচ নেই। পুরো যাত্রা ছিল নির্ভরতার।",
-      rating: 5,
     },
     {
       name: "আব্দুল্লাহ আল মামুন",
@@ -51,7 +46,6 @@ const Testimonials = () => {
       category: "আস্থা ও নির্ভরতার প্রতীক",
       review:
         "এত সুন্দর ও সুশৃঙ্খলভাবে হজ করতে পেরেছি যে ভাষায় প্রকাশ করা কঠিন। প্রতিটি পদক্ষেপে তাদের সহায়তা ছিল অসাধারণ। আল্লাহ তাদের জাজাকাল্লাহ খাইর দান করুন।",
-      rating: 5,
     },
   ];
 
@@ -187,7 +181,7 @@ const Testimonials = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
@@ -264,21 +258,6 @@ const Testimonials = () => {
                     <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-white/50 rounded-tl group-hover:w-4 group-hover:h-4 transition-all duration-300"></div>
                     <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 border-white/50 rounded-br group-hover:w-4 group-hover:h-4 transition-all duration-300"></div>
                   </div>
-                </div>
-
-                {/* Rating Stars - Animated */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className="w-5 h-5 text-amber-500 animate-star-pop"
-                      style={{ animationDelay: `${i * 100}ms` }}
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
                 </div>
 
                 {/* Category */}
