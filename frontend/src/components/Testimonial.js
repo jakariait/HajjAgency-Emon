@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react"; // useRef is needed for autoSlideTimeoutRef
+import { motion, AnimatePresence } from "framer-motion";
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const autoSlideTimeoutRef = useRef(null);
-  const carouselRef = useRef(null);
+  const autoSlideTimeoutRef = useRef(null); // Keep this ref as it's used for the timeout
+
   const testimonials = [
     {
       name: "মোঃ রেজাউল করিম",
@@ -67,16 +68,15 @@ const Testimonials = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [testimonialsPerView]);
 
-  const scrollToCurrentIndex = (index) => {
-    if (carouselRef.current) {
-      const offset = (index / testimonialsPerView) * 100;
-      carouselRef.current.style.transform = `translateX(-${offset}%)`;
-    }
-  };
-
   const handleNext = () => {
-    const newIndex = (currentIndex + testimonialsPerView) % testimonials.length;
-    setCurrentIndex(newIndex);
+    setCurrentIndex((prevIndex) => {
+      const nextIndex = prevIndex + testimonialsPerView;
+      // If we go past the end, loop back to the beginning
+      if (nextIndex >= testimonials.length) {
+        return 0; // Loop back to the first group
+      }
+      return nextIndex;
+    });
     setIsPaused(true);
     if (autoSlideTimeoutRef.current) {
       clearTimeout(autoSlideTimeoutRef.current);
@@ -87,11 +87,18 @@ const Testimonials = () => {
   };
 
   const handlePrev = () => {
-    const totalGroups = Math.ceil(testimonials.length / testimonialsPerView);
-    const currentGroup = Math.floor(currentIndex / testimonialsPerView);
-    const newGroup = (currentGroup - 1 + totalGroups) % totalGroups;
-    const newIndex = newGroup * testimonialsPerView;
-    setCurrentIndex(newIndex);
+    setCurrentIndex((prevIndex) => {
+      const prevGroupStart = prevIndex - testimonialsPerView;
+      // If we go before the beginning, loop to the last group
+      if (prevGroupStart < 0) {
+        // Calculate the starting index of the last full or partial group
+        const lastGroupStartIndex =
+          Math.floor((testimonials.length - 1) / testimonialsPerView) *
+          testimonialsPerView;
+        return lastGroupStartIndex;
+      }
+      return prevGroupStart;
+    });
     setIsPaused(true);
     if (autoSlideTimeoutRef.current) {
       clearTimeout(autoSlideTimeoutRef.current);
@@ -101,17 +108,18 @@ const Testimonials = () => {
     }, 5000);
   };
 
-  useEffect(() => {
-    scrollToCurrentIndex(currentIndex);
-  }, [currentIndex, testimonialsPerView]); // Added testimonialsPerView as a dependency
+
 
   useEffect(() => {
     if (!isPaused) {
       const interval = setInterval(() => {
-        setCurrentIndex(
-          (prevIndex) =>
-            (prevIndex + testimonialsPerView) % testimonials.length,
-        );
+        setCurrentIndex((prevIndex) => {
+          const nextIndex = prevIndex + testimonialsPerView;
+          if (nextIndex >= testimonials.length) {
+            return 0; // Loop back to the first group
+          }
+          return nextIndex;
+        });
       }, 7000);
       return () => clearInterval(interval);
     }
@@ -227,12 +235,22 @@ const Testimonials = () => {
         </div>
 
         {/* Testimonials Carousel */}
-        <div className="relative mt-12 overflow-hidden">
-          <div
-            ref={carouselRef}
-            className="flex transition-transform duration-500 ease-in-out"
+        <div className="relative mt-12 px-4 overflow-hidden ">
+          <motion.div
+            className="flex gap-x-4"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
+            initial={{ x: 0 }}
+            animate={{
+              x: `-${
+                currentIndex * (100 / testimonialsPerView) +
+                (currentIndex > 0 && currentIndex % testimonialsPerView !== 0
+                  ? (currentIndex % testimonialsPerView) *
+                    (100 / testimonialsPerView / testimonialsPerView)
+                  : 0)
+              }%`,
+            }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
             style={{
               width: `${(testimonials.length / testimonialsPerView) * 100}%`,
             }}
@@ -240,7 +258,7 @@ const Testimonials = () => {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="flex-none px-2"
+                className="flex-none"
                 style={{ flexBasis: `calc(100% / ${testimonialsPerView})` }}
               >
                 {" "}
@@ -376,7 +394,7 @@ const Testimonials = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Navigation Buttons */}
           <button
