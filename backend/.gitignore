@@ -35,4 +35,4 @@ coverage/
 dump/
 
 # Ignore uploaded files
-uploads/
+#uploads/

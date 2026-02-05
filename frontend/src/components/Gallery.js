@@ -65,7 +65,7 @@ const Gallery = ({ isHomePage = false }) => {
             ))
           ) : brands.length > 0 ? (
             // Duplicate brands for a richer gallery effect if desired, ensuring unique keys
-            (isHomePage ? brands.slice(0, 6) : [...brands, ...brands]).map(
+            (isHomePage ? brands.slice(0, 6) : brands).map(
               (brand, i) => (
                 <div
                   key={`${brand._id}-${i}`} // Use a combination for unique key
