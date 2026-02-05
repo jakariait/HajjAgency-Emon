@@ -4,62 +4,100 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/utils/services";
 import { getBrandName } from "@/utils/brand";
-import { useEntranceAnimation } from "@/hooks/useEntranceAnimation";
 
 const Services = ({ selectedServices, isHomePage = false }) => {
-  const isVisible = useEntranceAnimation(300); // Add a small delay for the section itself
-
   const displayedServices = selectedServices
     ? services.filter((service) => selectedServices.includes(service.title))
     : services;
 
-  // Variants for the overall content container
-  const contentContainerVariants = {
+  // Container variant for staggered children
+  const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1, // Stagger delay for all direct children
-        delayChildren: 0.3, // Delay before children start animating
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
       },
     },
   };
 
-  // Variants for individual fade-up items (text, buttons, etc.)
+  // Refined fade-up animation with smoother easing
   const fadeUpItemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
-  // Variants for the main services grid container
-  const gridContainerVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.98
+    },
     show: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.8, // Duration for the container itself
-        staggerChildren: 0.1, // Stagger delay for children (individual service cards)
-        delayChildren: 0.3, // Delay before children start animating
-      },
+        duration: 0.7,
+        ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for smooth motion
+      }
     },
   };
 
-  // Variants for individual service cards
-  const gridItemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  // Enhanced card animation with scale and rotation
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: 60,
+      scale: 0.9,
+      rotateX: 10,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.19, 1.0, 0.22, 1.0], // Exponential easing out
+      }
+    },
+  };
+
+  // Decorative line animation
+  const lineVariants = {
+    hidden: { scaleX: 0, opacity: 0 },
+    show: {
+      scaleX: 1,
+      opacity: 1,
+      transition: {
+        duration: 1.2,
+        ease: [0.65, 0, 0.35, 1],
+        delay: 0.3
+      }
+    },
+  };
+
+  // Diamond decoration animation
+  const diamondVariants = {
+    hidden: { scale: 0, rotate: 0, opacity: 0 },
+    show: (custom) => ({
+      scale: 1,
+      rotate: 45,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        delay: 0.4 + (custom * 0.1),
+        ease: "backOut",
+      }
+    }),
   };
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 50 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 1 }} // Overall section entrance duration
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px", amount: 0.1 }}
       className="relative py-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50 overflow-hidden"
     >
       {/* Background Islamic Pattern */}
-      <div className="absolute inset-0 opacity-[0.03]">
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern
@@ -76,22 +114,8 @@ const Services = ({ selectedServices, isHomePage = false }) => {
                 stroke="#059669"
                 strokeWidth="0.5"
               />
-              <circle
-                cx="50"
-                cy="50"
-                r="15"
-                fill="none"
-                stroke="#059669"
-                strokeWidth="0.5"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="25"
-                fill="none"
-                stroke="#059669"
-                strokeWidth="0.3"
-              />
+              <circle cx="50" cy="50" r="15" fill="none" stroke="#059669" strokeWidth="0.5" />
+              <circle cx="50" cy="50" r="25" fill="none" stroke="#059669" strokeWidth="0.3" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#services-pattern)" />
@@ -99,39 +123,69 @@ const Services = ({ selectedServices, isHomePage = false }) => {
       </div>
 
       {/* Decorative Top Border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
-
       <motion.div
-        className="relative xl:container xl:mx-auto"
-        variants={contentContainerVariants}
-        initial="hidden"
-        animate={isVisible ? "show" : "hidden"}
-      >
+        className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+        variants={lineVariants}
+      ></motion.div>
+
+      <div className="relative xl:container xl:mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          {/* Decorative Top Element */}
+        <motion.div
+          className="text-center mb-16"
+          variants={containerVariants}
+        >
+          {/* Decorative Top Line */}
           <motion.div
             className="flex items-center justify-center gap-3 mb-6"
             variants={fadeUpItemVariants}
           >
-            <div className="w-12 h-px bg-gradient-to-r from-transparent to-emerald-400"></div>
-            <div className="w-2 h-2 rotate-45 bg-amber-500"></div>
-            <div className="w-16 h-px bg-gradient-to-r from-emerald-400 to-amber-400"></div>
-            <div className="w-3 h-3 rotate-45 bg-emerald-500"></div>
-            <div className="w-16 h-px bg-gradient-to-r from-amber-400 to-emerald-400"></div>
-            <div className="w-2 h-2 rotate-45 bg-amber-500"></div>
-            <div className="w-12 h-px bg-gradient-to-r from-emerald-400 to-transparent"></div>
+            <motion.div
+              className="w-12 h-px bg-gradient-to-r from-transparent to-emerald-400"
+              variants={lineVariants}
+            ></motion.div>
+            <motion.div
+              className="w-2 h-2 rotate-45 bg-amber-500"
+              variants={diamondVariants}
+              custom={0}
+            ></motion.div>
+            <motion.div
+              className="w-16 h-px bg-gradient-to-r from-emerald-400 to-amber-400"
+              variants={lineVariants}
+            ></motion.div>
+            <motion.div
+              className="w-3 h-3 rotate-45 bg-emerald-500"
+              variants={diamondVariants}
+              custom={1}
+            ></motion.div>
+            <motion.div
+              className="w-16 h-px bg-gradient-to-r from-amber-400 to-emerald-400"
+              variants={lineVariants}
+            ></motion.div>
+            <motion.div
+              className="w-2 h-2 rotate-45 bg-amber-500"
+              variants={diamondVariants}
+              custom={2}
+            ></motion.div>
+            <motion.div
+              className="w-12 h-px bg-gradient-to-r from-emerald-400 to-transparent"
+              variants={lineVariants}
+            ></motion.div>
           </motion.div>
-          {/* Main Heading */}
+
           <motion.h2
             className="text-4xl md:text-5xl font-bold text-emerald-900 mb-4 relative inline-block"
             variants={fadeUpItemVariants}
           >
             আমাদের সেবা সমূহ
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500 rounded-full"></div>
+            <motion.div
+              className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500 rounded-full"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+            ></motion.div>
           </motion.h2>
 
-          {/* Subheading */}
           <motion.p
             className="text-xl md:text-2xl text-amber-700 font-semibold mt-8 mb-4"
             variants={fadeUpItemVariants}
@@ -139,235 +193,203 @@ const Services = ({ selectedServices, isHomePage = false }) => {
             বিশ্বাসের সঙ্গে সেবা, আন্তরিকতার সঙ্গে প্রস্তুতি
           </motion.p>
 
-          {/* Description */}
           <motion.div
             className="max-w-4xl mx-auto mt-8"
             variants={fadeUpItemVariants}
           >
             <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border-2 border-emerald-200/50">
-              {/* Decorative Corners */}
-              <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-emerald-500/40 rounded-tl"></div>
-              <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-emerald-500/40 rounded-tr"></div>
-              <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-amber-500/40 rounded-bl"></div>
-              <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-amber-500/40 rounded-br"></div>
-
+              <motion.div
+                className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-emerald-500/40 rounded-tl"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              ></motion.div>
+              <motion.div
+                className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-amber-500/40 rounded-br"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+              ></motion.div>
               <p className="text-gray-700 leading-relaxed text-lg">
                 {getBrandName()} হজ ও ওমরাহ যাত্রাকে সহজ, নিরাপদ ও সুশৃঙ্খল করতে
-                প্রতিশ্রুতিবদ্ধ। আমরা প্রি-রেজিস্ট্রেশন, ভিসা, এয়ার টিকেট,
-                মানসম্পন্ন হোটেল, আরামদায়ক ট্রান্সপোর্ট, প্রতিদিন ৩ বেলা দেশীয়
-                খাবার, জিয়ারাহ এবং অভিজ্ঞ গাইডসহ সম্পূর্ণ প্যাকেজ সেবা দিয়ে
-                থাকি। আল্লাহ ঘরকে কেন্দ্র করে আপনার ইবাদতের পূণ্যময় সময়টুকু
-                হোক প্রশান্তিময়। সব আয়োজনের দায়িত্ব আমাদের। ইন-শা-আল্লাহ।
+                প্রতিশ্রুতিবদ্ধ। আমাদের সাথে আপনার ইবাদতের পূণ্যময় সময়টুকু হোক প্রশান্তিময়।
               </p>
             </div>
           </motion.div>
+        </motion.div>
 
-          {/* Decorative Divider */}
-          <motion.div
-            className="flex items-center justify-center gap-3 mt-12"
-            variants={fadeUpItemVariants}
-          >
-            <div className="w-16 h-px bg-gradient-to-r from-transparent to-emerald-300"></div>
-            <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
-            <div className="w-2 h-2 rotate-45 bg-amber-400"></div>
-            <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
-            <div className="w-16 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
-          </motion.div>
-        </div>
-
-        {/* Services Grid */}
+        {/* Services Grid with Stagger Effect */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
-          variants={gridContainerVariants}
-          initial="hidden"
-          animate="show"
+          variants={containerVariants}
         >
           {displayedServices.map((service, index) => (
             <motion.div
               key={index}
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 border-emerald-200/50 hover:border-amber-400/50"
-              variants={gridItemVariants}
+              variants={cardVariants}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-500 overflow-hidden border-2 border-emerald-200/50 hover:border-amber-400/50"
+              style={{ perspective: "1000px" }}
             >
-              {/* Decorative Background Pattern */}
+              {/* Card Pattern */}
               <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300">
-                <svg
-                  width="100%"
-                  height="100%"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <pattern
-                      id={`card-pattern-${index}`}
-                      x="0"
-                      y="0"
-                      width="60"
-                      height="60"
-                      patternUnits="userSpaceOnUse"
-                    >
-                      <path
-                        d="M30 0 L45 15 L30 30 L15 15 Z"
-                        fill="none"
-                        stroke="#059669"
-                        strokeWidth="0.5"
-                      />
-                      <circle
-                        cx="30"
-                        cy="30"
-                        r="10"
-                        fill="none"
-                        stroke="#059669"
-                        strokeWidth="0.3"
-                      />
+                    <pattern id={`card-pattern-${index}`} x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                      <path d="M30 0 L45 15 L30 30 L15 15 Z" fill="none" stroke="#059669" strokeWidth="0.5" />
                     </pattern>
                   </defs>
-                  <rect
-                    width="100%"
-                    height="100%"
-                    fill={`url(#card-pattern-${index})`}
-                  />
+                  <rect width="100%" height="100%" fill={`url(#card-pattern-${index})`} />
                 </svg>
               </div>
 
-              {/* Top Decorative Border */}
-              <div className="h-2 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500"></div>
+              <motion.div
+                className="h-2 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+              ></motion.div>
 
-              {/* Content */}
               <div className="relative p-8">
-                {/* Icon Container */}
-                <div className="relative mb-6">
+                <motion.div
+                  className="relative mb-6"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
+                >
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-amber-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                  <div className="relative w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <motion.div
+                    className="relative w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg"
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: 6,
+                      transition: { duration: 0.3, ease: "backOut" }
+                    }}
+                  >
                     {service.icon}
-                    {/* Decorative Corners on Icon */}
-                    <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-white/50 rounded-tl"></div>
-                    <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 border-white/50 rounded-br"></div>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
 
-                {/* Title */}
-                <h3 className="text-2xl font-bold text-emerald-900 mb-4 group-hover:text-amber-700 transition-colors duration-300">
+                <motion.h3
+                  className="text-2xl font-bold text-emerald-900 mb-4 group-hover:text-amber-700 transition-colors duration-300"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
+                >
                   {service.title}
-                </h3>
+                </motion.h3>
 
-                {/* Decorative Line */}
-                <div className="w-16 h-1 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full mb-4"></div>
+                <motion.div
+                  className="w-16 h-1 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full mb-4"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
+                ></motion.div>
 
-                {/* Description */}
-                <p className="text-gray-600 leading-relaxed mb-6 min-h-[120px]">
+                <motion.p
+                  className="text-gray-600 leading-relaxed mb-6 min-h-[120px]"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 + 0.5 }}
+                >
                   {service.description}
-                </p>
+                </motion.p>
 
-                {/* Button */}
-                <Link href="/contact-us">
-                  <button className="group/btn cursor-pointer relative w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-amber-500 hover:to-amber-600 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-                    {/* Shimmer Effect */}
-                    <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      <span className="w-1.5 h-1.5 rotate-45 bg-white/80"></span>
-                      {service.buttonText}
-                      <span className="w-1.5 h-1.5 rotate-45 bg-white/80"></span>
-                    </span>
-
-                    {/* Decorative Corners */}
-                    <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-white/30"></div>
-                    <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-white/30"></div>
-                  </button>
-                </Link>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
+                >
+                  <Link href="/contact-us">
+                    <motion.button
+                      className="group/btn cursor-pointer relative w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-amber-500 hover:to-amber-600 text-white font-semibold py-3 px-6 rounded-xl shadow-md overflow-hidden"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 0.6 }}
+                      ></motion.div>
+                      <span className="relative z-10 flex items-center justify-center gap-2">
+                        {service.buttonText}
+                      </span>
+                    </motion.button>
+                  </Link>
+                </motion.div>
               </div>
-
-              {/* Card Decorative Corners */}
-              <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-emerald-300/30 rounded-tl group-hover:border-amber-400/50 transition-colors duration-300"></div>
-              <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-emerald-300/30 rounded-tr group-hover:border-amber-400/50 transition-colors duration-300"></div>
-              <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-emerald-300/30 rounded-bl group-hover:border-amber-400/50 transition-colors duration-300"></div>
-              <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-emerald-300/30 rounded-br group-hover:border-amber-400/50 transition-colors duration-300"></div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* View More Services Button */}
-        <div className="text-center">
-          {/* Decorative Divider */}
+        {/* View More Button */}
+        {isHomePage && (
           <motion.div
-            className="flex items-center justify-center gap-3 mb-8"
-            variants={fadeUpItemVariants}
+            className="text-center"
+            variants={containerVariants}
           >
-            <div className="w-24 h-px bg-gradient-to-r from-transparent to-emerald-300"></div>
-            <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
-            <div className="w-3 h-3 rotate-45 bg-amber-500"></div>
-            <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
-            <div className="w-24 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
-          </motion.div>
+            <motion.div
+              variants={fadeUpItemVariants}
+              className="flex items-center justify-center gap-3 mb-8"
+            >
+              <motion.div
+                className="w-24 h-px bg-gradient-to-r from-transparent to-emerald-300"
+                variants={lineVariants}
+              ></motion.div>
+              <motion.div
+                className="w-3 h-3 rotate-45 bg-amber-500"
+                variants={diamondVariants}
+                custom={0}
+              ></motion.div>
+              <motion.div
+                className="w-24 h-px bg-gradient-to-r from-emerald-300 to-transparent"
+                variants={lineVariants}
+              ></motion.div>
+            </motion.div>
 
-          {isHomePage && (
             <motion.div variants={fadeUpItemVariants}>
               <Link href="/services">
-                <button className="group cursor-pointer relative bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 uppercase overflow-hidden border-2 border-amber-400/50 hover:border-amber-300 hover:scale-105 active:scale-95">
-                  {/* Animated Background Pattern */}
-                  <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
-                    <svg
-                      width="100%"
-                      height="100%"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <defs>
-                        <pattern
-                          id="more-btn-pattern"
-                          x="0"
-                          y="0"
-                          width="40"
-                          height="40"
-                          patternUnits="userSpaceOnUse"
-                        >
-                          <path
-                            d="M20 0 L30 10 L20 20 L10 10 Z"
-                            fill="none"
-                            stroke="white"
-                            strokeWidth="0.5"
-                          />
-                          <circle
-                            cx="20"
-                            cy="20"
-                            r="6"
-                            fill="none"
-                            stroke="white"
-                            strokeWidth="0.3"
-                          />
-                        </pattern>
-                      </defs>
-                      <rect
-                        width="100%"
-                        height="100%"
-                        fill="url(#more-btn-pattern)"
-                      />
-                    </svg>
-                  </div>
-
-                  {/* Shimmer Effect */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-
-                  {/* Button Text */}
-                  <span className="relative z-10 flex items-center justify-center gap-3 text-lg">
-                    <span className="w-2 h-2 rotate-45 bg-white/80 group-hover:rotate-[225deg] transition-transform duration-500"></span>
-                    আমাদের আরো সেবাসমূহ দেখুন
-                    <span className="w-2 h-2 rotate-45 bg-white/80 group-hover:rotate-[225deg] transition-transform duration-500"></span>
-                  </span>
-
-                  {/* Decorative Corners */}
-                  <div className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-white/40 rounded-tl transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
-                  <div className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-white/40 rounded-tr transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
-                  <div className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-white/40 rounded-bl transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
-                  <div className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-white/40 rounded-br transition-all duration-300 group-hover:w-5 group-hover:h-5"></div>
-
-                  {/* Glow Effect */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400/0 via-emerald-400/20 to-emerald-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </button>
+                <motion.button
+                  className="group relative bg-gradient-to-br from-amber-500 to-amber-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl overflow-hidden"
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 20px 40px rgba(245, 158, 11, 0.4)",
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.8 }}
+                  ></motion.div>
+                  <span className="relative z-10">আমাদের আরো সেবাসমূহ দেখুন</span>
+                </motion.button>
               </Link>
             </motion.div>
-          )}
-        </div>
-      </motion.div>
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
+          </motion.div>
+        )}
+      </div>
+
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
+        variants={lineVariants}
+      ></motion.div>
     </motion.section>
   );
 };

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Image } from "primereact/image"; // Import PrimeReact Image component
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css";
-import { Eye } from 'lucide-react'; // Import Eye icon from lucide-react
+import { Eye } from "lucide-react"; // Import Eye icon from lucide-react
 import { getBrandName } from "@/utils/brand";
 import Link from "next/link"; //core css
 
@@ -66,23 +66,21 @@ const Gallery = ({ isHomePage = false }) => {
             ))
           ) : brands.length > 0 ? (
             // Duplicate brands for a richer gallery effect if desired, ensuring unique keys
-            (isHomePage ? brands.slice(0, 6) : brands).map(
-              (brand, i) => (
-                <div
-                  key={`${brand._id}-${i}`} // Use a combination for unique key
-                  className="mb-4 overflow-hidden  transition-shadow duration-300 ease-in-out break-inside-avoid-column"
-                >
-                  <Image
-                    src={`${baseUrl}/uploads/${brand.imgSrc}`}
-                    alt="Gallery Image"
-                    preview
-                    width="100%"
-                    className="h-full w-full object-cover rounded-lg"
-                    indicatorIcon={<Eye size={40} color="white" />} // Use Lucide Eye icon
-                  />
-                </div>
-              ),
-            )
+            (isHomePage ? brands.slice(0, 6) : brands).map((brand, i) => (
+              <div
+                key={`${brand._id}-${i}`} // Use a combination for unique key
+                className="mb-4 overflow-hidden  transition-shadow duration-300 ease-in-out break-inside-avoid-column"
+              >
+                <Image
+                  src={`${baseUrl}/uploads/${brand.imgSrc}`}
+                  alt="Gallery Image"
+                  preview
+                  width="100%"
+                  className="h-full w-full object-cover rounded-lg"
+                  indicatorIcon={<Eye size={40} color="white" />} // Use Lucide Eye icon
+                />
+              </div>
+            ))
           ) : (
             <p className="col-span-full text-center text-gray-600">
               No images available.
