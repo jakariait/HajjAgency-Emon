@@ -9,6 +9,7 @@ const FaqController = require("../controllers/FaqController");
 const BrandController = require("../controllers/BrandController");
 const ResultController = require("../controllers/ResultController");
 const blogController = require("../controllers/BlogController");
+const videoLinkController = require("../controllers/VideoLinkController");
 
 // Admin
 const { adminProtect } = require("../middlewares/authAdminMiddleware");
@@ -130,5 +131,12 @@ router.get("/blog/slug/:slug", blogController.getBlogBySlug);
 router.get("/blog/:id", blogController.getBlogById);
 router.patch("/blog/:id", upload, adminProtect, blogController.updateBlog);
 router.delete("/blog/:id", adminProtect, blogController.deleteBlog);
+
+// Routes for Video Links
+router.post("/video-links", adminProtect, videoLinkController.createVideoLink);
+router.get("/video-links", videoLinkController.getAllVideoLinks);
+router.get("/video-links/:id", videoLinkController.getVideoLinkById);
+router.patch("/video-links/:id", adminProtect, videoLinkController.updateVideoLink);
+router.delete("/video-links/:id", adminProtect, videoLinkController.deleteVideoLink);
 
 module.exports = router;

@@ -18,7 +18,7 @@ const AdminHeader = () => {
     { name: "Dashboard", path: "/admin/dashboard" },
     { name: "Blogs", path: "/admin/dashboard/blogs" },
     { name: "Brands", path: "/admin/dashboard/brands" },
-    { name: "Results", path: "/admin/dashboard/results" },
+    { name: "Gallery", path: "/admin/dashboard/gallery" },
     { name: "FAQ", path: "/admin/dashboard/faq" },
   ];
 
