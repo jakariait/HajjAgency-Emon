@@ -31,7 +31,7 @@ const Gallery = ({ isHomePage = false }) => {
 
   return (
     <section className="bg-gray-50 border-b border-gray-200 py-6 md:py-12">
-      <div className="xl:container xl:mx-auto px-4 text-center">
+      <div className="xl:container xl:mx-auto px-2 text-center">
         <div className="mb-8">
           {/* Decorative Top Element - Reusing a simplified version from Service.js */}
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -54,13 +54,13 @@ const Gallery = ({ isHomePage = false }) => {
             একসাথে কাটানো মুহূর্তগুলো
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="columns-2 md:columns-3 gap-4 p-2">
           {loading ? (
             // Basic skeleton loading if brands are still loading
             Array.from({ length: isHomePage ? 6 : 8 }).map((_, i) => (
               <div
                 key={i}
-                className="relative w-full h-48 bg-gray-300 rounded-lg animate-pulse"
+                className="relative w-full h-48 bg-gray-300 rounded-lg animate-pulse mb-4"
               ></div>
             ))
           ) : brands.length > 0 ? (
@@ -69,14 +69,14 @@ const Gallery = ({ isHomePage = false }) => {
               (brand, i) => (
                 <div
                   key={`${brand._id}-${i}`} // Use a combination for unique key
-                  className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                  className="mb-4 overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out break-inside-avoid-column"
                 >
                   <Image
                     src={`${baseUrl}/uploads/${brand.imgSrc}`}
                     alt="Gallery Image"
                     preview
                     width="100%"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover rounded-lg"
                   />
                 </div>
               ),

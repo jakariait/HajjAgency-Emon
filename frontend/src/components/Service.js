@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/utils/services";
-import {getBrandName} from "@/utils/brand";
+import { getBrandName } from "@/utils/brand";
 
 const Services = ({ selectedServices, isHomePage = false }) => {
   const displayedServices = selectedServices

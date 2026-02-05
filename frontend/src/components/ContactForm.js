@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Send } from "lucide-react";
 import { gtmPushEvent } from "@/utils/gtm";
 
@@ -15,6 +15,8 @@ const ContactForm = () => {
   });
 
   const [successMsg, setSuccessMsg] = useState("");
+  const [errors, setErrors] = useState({});
+  const [formIsValid, setFormIsValid] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,10 +24,47 @@ const ContactForm = () => {
       ...prev,
       [name]: value,
     }));
+    // Clear the error for the current field
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   };
+
+  const validateForm = (setFieldErrors = true) => {
+    let newErrors = {};
+    let isValid = true;
+
+    if (!formData.name.trim()) {
+      newErrors.name = "পূর্ণ নাম আবশ্যক!";
+      isValid = false;
+    }
+    if (!formData.phone.trim()) {
+      newErrors.phone = "ফোন নম্বর আবশ্যক!";
+      isValid = false;
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = "বার্তা আবশ্যক!";
+      isValid = false;
+    }
+
+    if (setFieldErrors) {
+      setErrors(newErrors);
+    }
+    return isValid;
+  };
+
+  useEffect(() => {
+    setFormIsValid(validateForm(false)); // Validate without setting errors
+  }, [formData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      // validateForm will set errors if it's called with setFieldErrors = true (default)
+      return; // Stop submission if validation fails
+    }
 
     const payload = {
       fullName: formData.name,
@@ -133,6 +172,9 @@ const ContactForm = () => {
                 className="w-full px-4 py-3 bg-white/95 backdrop-blur-sm border-2 border-emerald-300/50 rounded-xl focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 text-emerald-900 placeholder-gray-400"
                 placeholder="আপনার পূর্ণ নাম লিখুন"
               />
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+              )}
               {/* Decorative corners */}
               <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-emerald-300/30 rounded-tl pointer-events-none"></div>
               <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-emerald-300/30 rounded-br pointer-events-none"></div>
@@ -143,13 +185,12 @@ const ContactForm = () => {
           <div>
             <label className="block text-amber-300 font-semibold mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rotate-45 bg-amber-400"></span>
-              ইমেইল ঠিকানা *
+              ইমেইল ঠিকানা
             </label>
             <div className="relative">
               <input
                 type="email"
                 name="email"
-                required
                 value={formData.email}
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 bg-white/95 backdrop-blur-sm border-2 border-emerald-300/50 rounded-xl focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 text-emerald-900 placeholder-gray-400"
@@ -165,7 +206,7 @@ const ContactForm = () => {
           <div>
             <label className="block text-amber-300 font-semibold mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rotate-45 bg-amber-400"></span>
-              ফোন নম্বর
+              ফোন নম্বর *
             </label>
             <div className="relative">
               <input
@@ -176,6 +217,9 @@ const ContactForm = () => {
                 className="w-full px-4 py-3 bg-white/95 backdrop-blur-sm border-2 border-emerald-300/50 rounded-xl focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 text-emerald-900 placeholder-gray-400"
                 placeholder="আপনার ফোন নম্বর লিখুন"
               />
+              {errors.phone && (
+                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+              )}
               {/* Decorative corners */}
               <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-emerald-300/30 rounded-tl pointer-events-none"></div>
               <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-emerald-300/30 rounded-br pointer-events-none"></div>
@@ -216,13 +260,15 @@ const ContactForm = () => {
             <div className="relative">
               <textarea
                 name="message"
-                required
                 rows={5}
                 value={formData.message}
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 bg-white/95 backdrop-blur-sm border-2 border-emerald-300/50 rounded-xl focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 text-emerald-900 placeholder-gray-400 resize-none"
                 placeholder="আপনার প্রয়োজন সম্পর্কে আমাদের জানান..."
               ></textarea>
+              {errors.message && (
+                <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+              )}
               {/* Decorative corners */}
               <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-emerald-300/30 rounded-tl pointer-events-none"></div>
               <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-emerald-300/30 rounded-br pointer-events-none"></div>
@@ -232,7 +278,9 @@ const ContactForm = () => {
           {/* Submit Button */}
           <button
             onClick={handleSubmit}
-            className="group/btn relative w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105 active:scale-95 cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-amber-500/50 overflow-hidden"
+            // disabled={!formIsValid}
+            className={`group/btn relative w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105 active:scale-95 cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-amber-500/50 overflow-hidden
+            `}
           >
             {/* Shimmer Effect */}
             <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
@@ -256,7 +304,11 @@ const ContactForm = () => {
           <div className="relative mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white p-4 rounded-xl text-center font-semibold transition-all duration-300 shadow-lg overflow-hidden">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10">
-              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="100%"
+                height="100%"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <defs>
                   <pattern
                     id="success-pattern"

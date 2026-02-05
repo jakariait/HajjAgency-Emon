@@ -1,4 +1,4 @@
-const CarouselService = require("../services/ResultService");
+const ResultService = require("../services/ResultService");
 
 const createCarousel = async (req, res) => {
   try {
@@ -7,7 +7,7 @@ const createCarousel = async (req, res) => {
     }
 
     const fileName = req.files.imgSrc[0].filename; // Store only file name
-    const carousel = await CarouselService.createCarousel(fileName);
+    const carousel = await ResultService.createCarousel(fileName);
 
     res.status(201).json(carousel);
   } catch (error) {
@@ -17,7 +17,7 @@ const createCarousel = async (req, res) => {
 
 const getAllCarousel = async (req, res) => {
   try {
-    const carousels = await CarouselService.getAllCarousels();
+    const carousels = await ResultService.getAllCarousels();
     return res.status(200).json(carousels);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -26,7 +26,7 @@ const getAllCarousel = async (req, res) => {
 const deleteByIdCarousel = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedCarousel = await CarouselService.deleteCarousel(id);
+    const deletedCarousel = await ResultService.deleteCarousel(id);
     if (!deletedCarousel) {
       return res.status(404).json({ message: "Carousel not found" });
     }
