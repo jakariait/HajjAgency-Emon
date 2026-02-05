@@ -1,12 +1,33 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { packages } from "@/utils/package";
+import { getAllPackages } from "@/utils/package"; // Import the function
 import { getPhoneNumber } from "@/utils/brand";
+import { Alert, Box, CircularProgress } from "@mui/material";
 
 const Packages = ({ isHomePage = false }) => {
   const phone = getPhoneNumber();
+  const [allPackages, setAllPackages] = useState([]);
+  const [loadingPackages, setLoadingPackages] = useState(true);
+  const [packagesError, setPackagesError] = useState(null);
+
+  useEffect(() => {
+    const fetchAndSetPackages = async () => {
+      setLoadingPackages(true);
+      setPackagesError(null);
+      try {
+        const fetchedPackages = await getAllPackages();
+        setAllPackages(fetchedPackages);
+      } catch (err) {
+        setPackagesError("Failed to load packages.");
+        console.error("Error fetching packages:", err);
+      } finally {
+        setLoadingPackages(false);
+      }
+    };
+    fetchAndSetPackages();
+  }, []);
 
   // Container variant for staggered children
   const containerVariants = {
@@ -25,7 +46,7 @@ const Packages = ({ isHomePage = false }) => {
     hidden: {
       opacity: 0,
       y: 30,
-      scale: 0.95
+      scale: 0.95,
     },
     show: {
       opacity: 1,
@@ -34,7 +55,7 @@ const Packages = ({ isHomePage = false }) => {
       transition: {
         duration: 0.7,
         ease: [0.25, 0.46, 0.45, 0.94],
-      }
+      },
     },
   };
 
@@ -54,7 +75,7 @@ const Packages = ({ isHomePage = false }) => {
       transition: {
         duration: 0.8,
         ease: [0.19, 1.0, 0.22, 1.0],
-      }
+      },
     },
   };
 
@@ -67,8 +88,8 @@ const Packages = ({ isHomePage = false }) => {
       transition: {
         duration: 1.2,
         ease: [0.65, 0, 0.35, 1],
-        delay: 0.3
-      }
+        delay: 0.3,
+      },
     },
   };
 
@@ -81,9 +102,9 @@ const Packages = ({ isHomePage = false }) => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        delay: 0.4 + (custom * 0.1),
+        delay: 0.4 + custom * 0.1,
         ease: "backOut",
-      }
+      },
     }),
   };
 
@@ -98,9 +119,30 @@ const Packages = ({ isHomePage = false }) => {
         duration: 0.6,
         delay: 0.4,
         ease: "backOut",
-      }
+      },
     },
   };
+
+  if (loadingPackages) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (packagesError) {
+    return (
+      <Box sx={{ p: 4 }}>
+        <Alert severity="error">{packagesError}</Alert>
+      </Box>
+    );
+  }
 
   return (
     <motion.section
@@ -157,10 +199,7 @@ const Packages = ({ isHomePage = false }) => {
 
       <div className="relative xl:container xl:mx-auto">
         {/* Top Call to Action */}
-        <motion.div
-          className="text-center mb-12"
-          variants={fadeUpVariants}
-        >
+        <motion.div className="text-center mb-12" variants={fadeUpVariants}>
           <div className="inline-block relative">
             <motion.div
               className="absolute -inset-3 bg-gradient-to-r from-emerald-500/20 to-amber-500/20 rounded-2xl blur-lg"
@@ -213,10 +252,7 @@ const Packages = ({ isHomePage = false }) => {
         </motion.div>
 
         {/* Section Header */}
-        <motion.div
-          className="text-center mb-12"
-          variants={containerVariants}
-        >
+        <motion.div className="text-center mb-12" variants={containerVariants}>
           {/* Decorative Top Element */}
           <motion.div
             className="flex items-center justify-center gap-3 mb-6"
@@ -354,16 +390,16 @@ const Packages = ({ isHomePage = false }) => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16 items-stretch"
           variants={containerVariants}
         >
-          {packages
+          {allPackages
             .filter((pkg) => (isHomePage ? pkg.showOnHomePage === true : true))
             .map((pkg, index) => (
               <motion.div
-                key={index}
+                key={pkg._id || index} // Use _id if available, fallback to index
                 variants={cardVariants}
                 whileHover={{
                   y: -10,
                   scale: 1.02,
-                  transition: { duration: 0.3, ease: "easeOut" }
+                  transition: { duration: 0.3, ease: "easeOut" },
                 }}
                 className={`group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-500 overflow-hidden flex flex-col h-full ${
                   pkg.featured
@@ -400,7 +436,7 @@ const Packages = ({ isHomePage = false }) => {
                   >
                     <defs>
                       <pattern
-                        id={`card-pattern-${index}`}
+                        id={`card-pattern-${pkg._id || index}`}
                         x="0"
                         y="0"
                         width="60"
@@ -426,14 +462,18 @@ const Packages = ({ isHomePage = false }) => {
                     <rect
                       width="100%"
                       height="100%"
-                      fill={`url(#card-pattern-${index})`}
+                      fill={`url(#card-pattern-${pkg._id || index})`}
                     />
                   </svg>
                 </div>
 
                 {/* Top Decorative Border */}
                 <motion.div
-                  className={`h-2 ${pkg.type === "hajj" ? "bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600" : "bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500"}`}
+                  className={`h-2 ${
+                    pkg.type === "hajj"
+                      ? "bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600"
+                      : "bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500"
+                  }`}
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
@@ -450,15 +490,15 @@ const Packages = ({ isHomePage = false }) => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
                   >
-                  <span
-                    className={`inline-block px-4 py-1 rounded-full text-sm font-semibold ${
-                      pkg.type === "hajj"
-                        ? "bg-emerald-600 text-white"
-                        : "bg-emerald-100 text-emerald-700"
-                    }`}
-                  >
-                    {pkg.type === "hajj" ? "🕋 হজ" : "🌙 ওমরাহ"}
-                  </span>
+                    <span
+                      className={`inline-block px-4 py-1 rounded-full text-sm font-semibold ${
+                        pkg.type === "hajj"
+                          ? "bg-emerald-600 text-white"
+                          : "bg-emerald-100 text-emerald-700"
+                      }`}
+                    >
+                      {pkg.type === "hajj" ? "🕋 হজ" : "🌙 ওমরাহ"}
+                    </span>
                   </motion.div>
 
                   {/* Title */}
@@ -478,7 +518,11 @@ const Packages = ({ isHomePage = false }) => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 + 0.4, ease: "backOut" }}
+                    transition={{
+                      duration: 0.6,
+                      delay: index * 0.1 + 0.4,
+                      ease: "backOut",
+                    }}
                   >
                     <div className="relative inline-block">
                       <div className="absolute -inset-2 bg-gradient-to-r from-amber-400/20 to-emerald-400/20 rounded-lg blur-sm"></div>
@@ -505,31 +549,38 @@ const Packages = ({ isHomePage = false }) => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
                   >
-                    {pkg.features.map((feature, idx) => (
+                    {pkg.feature.map((feature, idx) => (
                       <motion.li
                         key={idx}
                         className="flex items-start gap-3 text-gray-700"
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: index * 0.1 + 0.7 + (idx * 0.05) }}
+                        transition={{
+                          duration: 0.4,
+                          delay: index * 0.1 + 0.7 + idx * 0.05,
+                        }}
                       >
                         <span className="mt-1.5 w-1.5 h-1.5 rotate-45 bg-emerald-500 flex-shrink-0"></span>
-                        <span className="text-sm leading-relaxed">{feature}</span>
+                        <span className="text-sm leading-relaxed">
+                          {feature}
+                        </span>
                       </motion.li>
                     ))}
                   </motion.ul>
 
                   {/* Note */}
-                  <motion.div
-                    className="mb-6 p-3 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.8 }}
-                  >
-                    <p className="text-xs text-gray-600 italic">{pkg.note}</p>
-                  </motion.div>
+                  {pkg.note && (
+                    <motion.div
+                      className="mb-6 p-3 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 + 0.8 }}
+                    >
+                      <p className="text-xs text-gray-600 italic">{pkg.note}</p>
+                    </motion.div>
+                  )}
 
                   {/* Registration Button */}
                   <motion.div
@@ -557,10 +608,10 @@ const Packages = ({ isHomePage = false }) => {
                         ></motion.div>
 
                         <span className="relative z-10 flex items-center justify-center gap-2 text-lg">
-                        <span className="w-2 h-2 rotate-45 bg-white/80"></span>
-                        এখনই রেজিস্ট্রেশন করুন
-                        <span className="w-2 h-2 rotate-45 bg-white/80"></span>
-                      </span>
+                          <span className="w-2 h-2 rotate-45 bg-white/80"></span>
+                          এখনই রেজিস্ট্রেশন করুন
+                          <span className="w-2 h-2 rotate-45 bg-white/80"></span>
+                        </span>
 
                         {/* Decorative Corners */}
                         <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-white/40 rounded-tl"></div>
@@ -620,10 +671,7 @@ const Packages = ({ isHomePage = false }) => {
         </motion.div>
 
         {/* View All Packages Button */}
-        <motion.div
-          className="text-center"
-          variants={containerVariants}
-        >
+        <motion.div className="text-center" variants={containerVariants}>
           {/* Decorative Divider */}
           <motion.div
             className="flex items-center justify-center gap-3 mb-8"

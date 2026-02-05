@@ -10,6 +10,8 @@ const BrandController = require("../controllers/BrandController");
 const ResultController = require("../controllers/ResultController");
 const blogController = require("../controllers/BlogController");
 const videoLinkController = require("../controllers/VideoLinkController");
+const PackageController = require("../controllers/PackageController");
+
 
 // Admin
 const { adminProtect } = require("../middlewares/authAdminMiddleware");
@@ -139,4 +141,13 @@ router.get("/video-links/:id", videoLinkController.getVideoLinkById);
 router.patch("/video-links/:id", adminProtect, videoLinkController.updateVideoLink);
 router.delete("/video-links/:id", adminProtect, videoLinkController.deleteVideoLink);
 
+// Routes for Packages
+router.post("/packages", adminProtect, PackageController.createPackage);
+router.get("/packages", PackageController.getAllPackages);
+router.get("/packages/:id", PackageController.getPackageById);
+router.patch("/packages/:id", adminProtect, PackageController.updatePackage);
+router.delete("/packages/:id", adminProtect, PackageController.deletePackage);
+
 module.exports = router;
+
+
