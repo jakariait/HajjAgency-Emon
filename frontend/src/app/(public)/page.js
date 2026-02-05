@@ -3,6 +3,7 @@ import HajjHero from "@/components/HajjHero";
 import Services from "@/components/Service";
 import Packages from "@/components/Package";
 import Gallery from "@/components/Gallery";
+import VideoGallery from "@/components/VideoGallery";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       />
       <Packages isHomePage={true} />
       <Gallery isHomePage={true} />
+      <VideoGallery isHomePage={true} />
     </main>
   );
 }
