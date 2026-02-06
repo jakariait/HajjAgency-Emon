@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect, lazy, Suspense } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname, useParams } from "next/navigation";
 import AuthAdminStore from "../store/AuthAdminStore";
 import useProductStore from "../store/useProductStore";
 const Editor = lazy(() =>
@@ -27,10 +27,12 @@ import Skeleton from "react-loading-skeleton";
 const ProductForm = ({ isEdit: isEditMode }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const slug = searchParams.get("slug"); // Get slug from search params
+  const params = useParams();
+  const id = params.slug;
 
-  const { fetchProductBySlug, product } = useProductStore();
+  const product = useProductStore((state) => state.product);
+  const fetchProductById = useProductStore((state) => state.fetchProductById);
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const { token } = AuthAdminStore();
 
@@ -64,10 +66,10 @@ const ProductForm = ({ isEdit: isEditMode }) => {
   const imageUrl = `${apiUrl.replace("/api", "")}/uploads`;
 
   useEffect(() => {
-    if (isEditMode && slug) {
-      fetchProductBySlug(slug);
+    if (isEditMode && id) {
+      fetchProductById(id);
     }
-  }, [slug, isEditMode, fetchProductBySlug]);
+  }, [id, isEditMode, fetchProductById]);
 
   useEffect(() => {
     if (isEditMode && product) {
@@ -223,10 +225,6 @@ const ProductForm = ({ isEdit: isEditMode }) => {
     }
 
     if (isEditMode) {
-      // Only append existing images that haven't been marked for deletion
-      existingImages.forEach((imageName) => {
-        formData.append("existingImages", imageName);
-      });
       // Append images marked for deletion
       imagesToDelete.forEach((imagePath) => {
         formData.append("imagesToDelete", imagePath);
@@ -241,7 +239,7 @@ const ProductForm = ({ isEdit: isEditMode }) => {
 
     try {
       if (isEditMode) {
-        await axios.patch(`${apiUrl}/products/${product._id}`, formData, {
+        await axios.patch(`${apiUrl}/products/${id}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
@@ -276,7 +274,7 @@ const ProductForm = ({ isEdit: isEditMode }) => {
       setSnackbarOpen(true);
 
       setTimeout(() => {
-        router.push("/admin/dashboard/packages"); // Redirect to products listing page
+        router.push("/admin/dashboard/view-products"); // Redirect to products listing page
       }, 3000);
     } catch (error) {
       setSnackbarMessage(

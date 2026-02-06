@@ -182,18 +182,15 @@ const ViewAllProducts = () => {
               <TableCell>Product ID</TableCell>
               <TableCell>Image</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Category</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Discount Price</TableCell>
               <TableCell>Stock</TableCell>
-              <TableCell>Flags</TableCell>
-              <TableCell>Status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filteredProducts.map((product, index) => (
-              <TableRow key={product.id}>
+              <TableRow key={product._id}>
                 <TableCell>{index + 1}</TableCell>
 
                 <TableCell>{product.productId}</TableCell>
@@ -203,12 +200,11 @@ const ViewAllProducts = () => {
                       imageName={product?.thumbnailImage}
                       altName={product?.name}
                       skeletonHeight={30}
-                      className="w-25 h-25 object-cover transform group-hover:scale-150 transition-transform duration-300"
+                      className="w-25 h-25 object-cover "
                     />
                   </div>
                 </TableCell>
                 <TableCell>{product?.name}</TableCell>
-                <TableCell>{product.category?.name}</TableCell>
                 {/*Main Price*/}
                 <TableCell>
                   {product.variants?.length
@@ -225,18 +221,6 @@ const ViewAllProducts = () => {
                   {product.variants?.length
                     ? `${product.variants.map((v) => v.stock).join(", ")} (Total: ${product.variants.reduce((sum, v) => sum + v.stock, 0)})`
                     : product.finalStock}
-                </TableCell>
-                <TableCell>
-                  {product.flags?.length
-                    ? product.flags.map((flag, index) => flag.name).join(", ") // Join flag names with a comma
-                    : "No Flags"}
-                </TableCell>
-                <TableCell>
-                  {product.isActive ? (
-                    <span className="text-green-500">Active</span>
-                  ) : (
-                    <span className="text-red-500">Inactive</span>
-                  )}
                 </TableCell>
 
                 <TableCell>
@@ -259,7 +243,7 @@ const ViewAllProducts = () => {
                         "primaryBgColor py-1 flex justify-center items-center accentTextColor rounded-lg"
                       }
                     >
-                      <Link href={`/admin/edit-product/${product.slug}`}>
+                      <Link href={`/admin/dashboard/edit-product/${product._id}`}>
                         <FaRegEdit className="w-5 h-5" />
                       </Link>
                     </div>
@@ -269,7 +253,7 @@ const ViewAllProducts = () => {
                       }
                     >
                       <MdDeleteOutline
-                        onClick={() => handleOpenDialog(product.productId)}
+                        onClick={() => handleOpenDialog(product._id)}
                         className={"w-5 h-5 cursor-pointer"}
                       />
                     </div>
