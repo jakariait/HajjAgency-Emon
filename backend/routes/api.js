@@ -4,19 +4,14 @@ const path = require("path");
 
 const contactController = require("../controllers/ContactController");
 const AdminController = require("../controllers/AdminController");
-
 const FaqController = require("../controllers/FaqController");
-const BrandController = require("../controllers/BrandController");
 const ResultController = require("../controllers/ResultController");
-const blogController = require("../controllers/BlogController");
 const videoLinkController = require("../controllers/VideoLinkController");
 const PackageController = require("../controllers/PackageController");
 const TestimonialController = require("../controllers/TestimonialController");
 
-
 // Admin
 const { adminProtect } = require("../middlewares/authAdminMiddleware");
-
 const { authenticateToken } = require("../middlewares/authenticateToken");
 
 require("dotenv").config();
@@ -96,21 +91,6 @@ router.patch("/faq/:id", adminProtect, FaqController.updateFAQ);
 router.delete("/faq/:id", adminProtect, FaqController.deleteFAQ);
 router.post("/faq", adminProtect, FaqController.createFAQ);
 
-//  Routes for Brands
-router.post(
-  "/createcarousel",
-  upload,
-  adminProtect,
-  BrandController.createCarousel,
-);
-router.get("/getallcarousel", BrandController.getAllCarousel);
-
-router.delete(
-  "/deletebyidcarousel/:id",
-  adminProtect,
-  BrandController.deleteByIdCarousel,
-);
-
 //  Routes for Results
 router.post(
   "/createresults",
@@ -126,21 +106,20 @@ router.delete(
   ResultController.deleteByIdCarousel,
 );
 
-// Routes for Blogs
-router.post("/blog", upload, adminProtect, blogController.createBlog);
-router.get("/blog", blogController.getAllBlogs);
-router.get("/activeblog", blogController.getActiveBlogs);
-router.get("/blog/slug/:slug", blogController.getBlogBySlug);
-router.get("/blog/:id", blogController.getBlogById);
-router.patch("/blog/:id", upload, adminProtect, blogController.updateBlog);
-router.delete("/blog/:id", adminProtect, blogController.deleteBlog);
-
 // Routes for Video Links
 router.post("/video-links", adminProtect, videoLinkController.createVideoLink);
 router.get("/video-links", videoLinkController.getAllVideoLinks);
 router.get("/video-links/:id", videoLinkController.getVideoLinkById);
-router.patch("/video-links/:id", adminProtect, videoLinkController.updateVideoLink);
-router.delete("/video-links/:id", adminProtect, videoLinkController.deleteVideoLink);
+router.patch(
+  "/video-links/:id",
+  adminProtect,
+  videoLinkController.updateVideoLink,
+);
+router.delete(
+  "/video-links/:id",
+  adminProtect,
+  videoLinkController.deleteVideoLink,
+);
 
 // Routes for Packages
 router.post("/packages", adminProtect, PackageController.createPackage);
@@ -150,12 +129,22 @@ router.patch("/packages/:id", adminProtect, PackageController.updatePackage);
 router.delete("/packages/:id", adminProtect, PackageController.deletePackage);
 
 // Routes for Testimonials
-router.post("/testimonials", adminProtect, TestimonialController.createTestimonial);
+router.post(
+  "/testimonials",
+  adminProtect,
+  TestimonialController.createTestimonial,
+);
 router.get("/testimonials", TestimonialController.getAllTestimonials);
 router.get("/testimonials/:id", TestimonialController.getTestimonialById);
-router.patch("/testimonials/:id", adminProtect, TestimonialController.updateTestimonial);
-router.delete("/testimonials/:id", adminProtect, TestimonialController.deleteTestimonial);
+router.patch(
+  "/testimonials/:id",
+  adminProtect,
+  TestimonialController.updateTestimonial,
+);
+router.delete(
+  "/testimonials/:id",
+  adminProtect,
+  TestimonialController.deleteTestimonial,
+);
 
 module.exports = router;
-
-

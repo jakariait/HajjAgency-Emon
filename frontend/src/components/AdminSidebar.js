@@ -16,7 +16,7 @@ const AdminHeader = () => {
 
   const menuItems = [
     { name: "Dashboard", path: "/admin/dashboard" },
-    { name: "Blogs", path: "/admin/dashboard/blogs" },
+    { name: "Packages", path: "/admin/dashboard/packages" },
     { name: "Testimonials", path: "/admin/dashboard/testimonials" },
     { name: "Gallery", path: "/admin/dashboard/gallery" },
     { name: "FAQ", path: "/admin/dashboard/faq" },
