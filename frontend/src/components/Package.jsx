@@ -146,8 +146,6 @@ const Packages = ({ isHomePage = false }) => {
 
   return (
     <motion.section
-      initial="hidden"
-      whileInView="show"
       viewport={{ once: true, margin: "-80px", amount: 0.1 }}
       className="relative py-20 px-4 bg-gradient-to-br from-white via-emerald-50/30 to-amber-50/30 overflow-hidden"
     >
