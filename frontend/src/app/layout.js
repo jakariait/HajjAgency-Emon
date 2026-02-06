@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Tiro_Bangla } from "next/font/google";
 import "./globals.css";
 import { getHomePageDescription, getHomePageTitle } from "@/utils/brand";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${tiroBangla.variable} antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -1,57 +1,51 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import { Autoplay } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
-const testimonialsData = [
-  {
-    name: "মোঃ রেজাউল করিম",
-    location: "কুমিল্লা",
-    category: "প্রশিক্ষণ ও গাইডেন্সে সন্তুষ্ট",
-    review:
-      "হজের আগে তাদের দেওয়া ট্রেনিং সেশনগুলো আমাকে অনেক আত্মবিশ্বাস দিয়েছে। কোন জায়গায় কী করতে হবে—সব বিস্তারিতভাবে বুঝিয়ে দিয়েছে। সৌদি আরবে যাত্রার সময় গাইডরাও খুবই আন্তরিক ছিলেন। আমি সত্যিই কৃতজ্ঞ।",
-  },
-  {
-    name: "মুন্নি আক্তার",
-    location: "রাজশাহী",
-    category: "সময়মতো সার্ভিস, সুন্দর ব্যবস্থাপনা",
-    review:
-      "Hajj Express BD - এর সময়ানুবর্তিতা ও মানসম্মত সেবায় আমি মুগ্ধ। মিনায় তাঁবু, মক্কা-মদিনায় হোটেল—সব জায়গায় ভালো ব্যবস্থা পেয়েছি। তাদের মাধ্যমে হজ করা ছিল সত্যিই প্রশান্তির।",
-  },
-  {
-    name: "জান্নাতুল ফেরদৌস",
-    location: "চট্টগ্রাম",
-    category: "আল্লাহর ঘরে পৌঁছাতে সেরা সাথী",
-    review:
-      "আমি বহু এজেন্সির খোঁজ করেছি, কিন্তু Hajj Express BD সবচেয়ে স্বচ্ছ ও বিশ্বস্ত মনে হয়েছে। তারা কথা রাখে। আমার জীবনের সবচেয়ে গুরুত্বপূর্ণ সফরকে এত সহজ ও স্মরণীয় করে তোলার জন্য ধন্যবাদ।",
-  },
-  {
-    name: "মোঃ শরীফুল ইসলাম",
-    location: "নারায়ণগঞ্জ",
-    category: "সফল হজ যাত্রা",
-    review:
-      "আমি ২০২৪ সালে Hajj Express BD এর মাধ্যমে হজ করেছি। শুরু থেকে শেষ পর্যন্ত তারা অসাধারণ সহযোগিতা করেছে। গাইড, হোটেল, খাবার—সবকিছু খুবই মানসম্মত ছিল। আলহামদুলিল্লাহ, শান্তিপূর্ণ হজ করতে পেরেছি। আল্লাহ তাদের উত্তম প্রতিদান দিন।",
-  },
-  {
-    name: "সাবিহা আফরিন",
-    location: "ঢাকা",
-    category: "পেশাদার ও বিশ্বস্ত এজেন্সি",
-    review:
-      "আমি ও আমার পরিবার ওমরাহ করেছি এই এজেন্সির মাধ্যমে। ভিসা প্রসেস থেকে শুরু করে প্রতিটি ধাপ খুবই দ্রুত ও পেশাদারভাবে সম্পন্ন হয়েছে। তারা সবকিছু খুব পরিষ্কারভাবে বুঝিয়ে দেয়, কোন লুকানো খরচ নেই। পুরো যাত্রা ছিল নির্ভরতার।",
-  },
-  {
-    name: "আব্দুল্লাহ আল মামুন",
-    location: "সিলেট",
-    category: "আস্থা ও নির্ভরতার প্রতীক",
-    review:
-      "এত সুন্দর ও সুশৃঙ্খলভাবে হজ করতে পেরেছি যে ভাষায় প্রকাশ করা কঠিন। প্রতিটি পদক্ষেপে তাদের সহায়তা ছিল অসাধারণ। আল্লাহ তাদের জাজাকাল্লাহ খাইর দান করুন।",
-  },
-];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const Testimonials = ({ testimonials = testimonialsData }) => {
+const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/testimonials`);
+        setTestimonials(response.data);
+      } catch (err) {
+        console.error("Error fetching testimonials:", err);
+        setError("Failed to load testimonials.");
+        toast.error("Failed to load testimonials.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="pt-10 pb-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50">
+        <div className="text-center py-10">Loading testimonials...</div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="pt-10 pb-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50">
+        <div className="text-center py-10 text-red-500">{error}</div>
+      </section>
+    );
+  }
+
   return (
     <section className="pt-10 pb-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50">
       {/* Decorative Top Element - Reusing a simplified version from Service.js */}
@@ -90,8 +84,8 @@ const Testimonials = ({ testimonials = testimonialsData }) => {
         }}
         className="px-4"
       >
-        {testimonials.map((t, i) => (
-          <SwiperSlide key={i}>
+        {testimonials.map((t) => (
+          <SwiperSlide key={t._id}>
             <div className="group relative bg-white rounded-2xl  p-6 border-2 border-emerald-200/50 hover:border-amber-400/50 transition-all h-full flex flex-col justify-between">
               <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-emerald-100 to-amber-100 text-emerald-800 text-sm font-semibold rounded-full mb-4">
                 {t.category}
@@ -110,6 +104,15 @@ const Testimonials = ({ testimonials = testimonialsData }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Decorative Divider */}
+      <div className="flex items-center justify-center gap-3 mt-20 ">
+        <div className="w-24 h-px bg-gradient-to-r from-transparent to-emerald-300"></div>
+        <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
+        <div className="w-3 h-3 rotate-45 bg-amber-500"></div>
+        <div className="w-2 h-2 rotate-45 bg-emerald-400"></div>
+        <div className="w-24 h-px bg-gradient-to-r from-emerald-300 to-transparent"></div>
+      </div>
     </section>
   );
 };

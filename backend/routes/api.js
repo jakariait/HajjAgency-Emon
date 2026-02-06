@@ -11,6 +11,7 @@ const ResultController = require("../controllers/ResultController");
 const blogController = require("../controllers/BlogController");
 const videoLinkController = require("../controllers/VideoLinkController");
 const PackageController = require("../controllers/PackageController");
+const TestimonialController = require("../controllers/TestimonialController");
 
 
 // Admin
@@ -147,6 +148,13 @@ router.get("/packages", PackageController.getAllPackages);
 router.get("/packages/:id", PackageController.getPackageById);
 router.patch("/packages/:id", adminProtect, PackageController.updatePackage);
 router.delete("/packages/:id", adminProtect, PackageController.deletePackage);
+
+// Routes for Testimonials
+router.post("/testimonials", adminProtect, TestimonialController.createTestimonial);
+router.get("/testimonials", TestimonialController.getAllTestimonials);
+router.get("/testimonials/:id", TestimonialController.getTestimonialById);
+router.patch("/testimonials/:id", adminProtect, TestimonialController.updateTestimonial);
+router.delete("/testimonials/:id", adminProtect, TestimonialController.deleteTestimonial);
 
 module.exports = router;
 
