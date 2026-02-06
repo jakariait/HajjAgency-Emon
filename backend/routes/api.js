@@ -9,6 +9,7 @@ const ResultController = require("../controllers/ResultController");
 const videoLinkController = require("../controllers/VideoLinkController");
 const PackageController = require("../controllers/PackageController");
 const TestimonialController = require("../controllers/TestimonialController");
+const ProductController = require("../controllers/productController");
 
 // Admin
 const { adminProtect } = require("../middlewares/authAdminMiddleware");
@@ -129,22 +130,47 @@ router.patch("/packages/:id", adminProtect, PackageController.updatePackage);
 router.delete("/packages/:id", adminProtect, PackageController.deletePackage);
 
 // Routes for Testimonials
+
 router.post(
   "/testimonials",
+
   adminProtect,
+
   TestimonialController.createTestimonial,
 );
+
 router.get("/testimonials", TestimonialController.getAllTestimonials);
+
 router.get("/testimonials/:id", TestimonialController.getTestimonialById);
+
 router.patch(
   "/testimonials/:id",
+
   adminProtect,
+
   TestimonialController.updateTestimonial,
 );
+
 router.delete(
   "/testimonials/:id",
+
   adminProtect,
+
   TestimonialController.deleteTestimonial,
 );
+
+// Routes for Products
+
+router.post("/products", upload, adminProtect, ProductController.createProduct);
+router.get("/products", ProductController.getAllProducts);
+router.get("/products/:id", ProductController.getProductById);
+router.get("/products/slug/:slug", ProductController.getProductBySlug);
+router.patch(
+  "/products/:id",
+  upload,
+  adminProtect,
+  ProductController.updateProduct,
+);
+router.delete("/products/:id", adminProtect, ProductController.deleteProduct);
 
 module.exports = router;
