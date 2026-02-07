@@ -9,14 +9,10 @@ const Editor = lazy(() =>
 );
 import {
   Box,
-  MenuItem,
-  Select,
   Typography,
   FormHelperText,
-  FormControl,
   TextField,
   Button,
-  InputLabel,
   Snackbar,
   Alert,
 } from "@mui/material";
@@ -478,24 +474,6 @@ const ProductForm = ({ isEdit: isEditMode }) => {
               required
               margin="normal"
             />
-
-            {isEditMode && (
-              <Box sx={{ minWidth: 200, my: 2 }}>
-                <FormControl fullWidth>
-                  <InputLabel id="status-select-label">Status</InputLabel>
-                  <Select
-                    labelId="status-select-label"
-                    id="status-select"
-                    value={isActive}
-                    label="Status"
-                    onChange={(e) => setIsActive(e.target.value)}
-                  >
-                    <MenuItem value="true">Active</MenuItem>
-                    <MenuItem value="false">Inactive</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-            )}
 
             <TextField
               label="Product Code"

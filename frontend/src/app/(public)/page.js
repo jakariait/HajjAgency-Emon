@@ -5,6 +5,7 @@ import Packages from "@/components/Package";
 import Gallery from "@/components/Gallery";
 import VideoGallery from "@/components/VideoGallery";
 import Testimonials from "@/components/Testimonial";
+import HomePageProducts from "@/components/HomePageProducts";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Gallery isHomePage={true} />
       <VideoGallery isHomePage={true} />
       <Testimonials />
+      <HomePageProducts />
     </main>
   );
 }

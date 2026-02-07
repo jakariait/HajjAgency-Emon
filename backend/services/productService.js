@@ -42,7 +42,7 @@ const ProductService = {
       const { page = 1, limit = 10, search = "" } = filters;
       const skip = (page - 1) * limit;
 
-      let query = {};
+let query = {};
       if (search) {
         query.name = { $regex: search, $options: "i" }; // Case-insensitive search
       }

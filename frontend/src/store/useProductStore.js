@@ -38,29 +38,6 @@ const useProductStore = create((set) => ({
     }
   },
 
-  fetchProductsAdmin: async (params) => {
-    set({ loading: true, error: null });
-
-    try {
-      const queryString = new URLSearchParams(params).toString();
-      const response = await axios.get(
-        `${apiUrl}/getAllProductsAdmin?${queryString}`,
-      );
-
-      set({
-        products: response.data.products || [],
-        totalProductsAdmin: response.data.totalProducts || 0,
-        totalPages: response.data.totalPages || 0,
-        currentPage: response.data.currentPage || 1,
-        loading: false,
-      });
-    } catch (error) {
-      set({
-        error: error.response?.data?.message || "Failed to fetch products",
-        loading: false,
-      });
-    }
-  },
 
   // ✅ Fetch a single product by ID
   fetchProductById: async (id) => {
@@ -151,20 +128,6 @@ const useProductStore = create((set) => ({
     }
   },
 
-  fetchHomeProducts: async () => {
-    set({ loading: true, error: null });
-
-    try {
-      const response = await axios.get(`${apiUrl}/homepageproducts`);
-      set({ homeProducts: response.data.data || {}, loading: false });
-    } catch (error) {
-      set({
-        error:
-          error.response?.data?.message || "Failed to fetch homepage products",
-        loading: false,
-      });
-    }
-  },
 }));
 
 export default useProductStore;

@@ -9,7 +9,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 // ✅ Zustand store (client-only)
 const useAuthAdminStore = create((set) => ({
 	admin: null,
-	token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
+	token: null,
 	error: null,
 	loading: false,
 

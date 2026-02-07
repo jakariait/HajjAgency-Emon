@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Tiro_Bangla } from "next/font/google";
 import "./globals.css";
 import { getHomePageDescription, getHomePageTitle } from "@/utils/brand";
 import { Toaster } from "react-hot-toast";
+import AuthInitializer from "@/components/AuthInitializer"; // Import the new component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${tiroBangla.variable} antialiased`}
       >
+        <AuthInitializer /> {/* Render AuthInitializer here */}
         {children}
         <Toaster />
       </body>
     </html>
   );
 }
+
+
