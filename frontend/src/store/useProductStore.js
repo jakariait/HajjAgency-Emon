@@ -66,7 +66,7 @@ const useProductStore = create((set) => ({
 
     try {
       const response = await axios.get(`${apiUrl}/products/slug/${slug}`);
-      set({ product: response.data.data || null, loading: false });
+      set({ product: response.data || null, loading: false });
     } catch (error) {
       set({
         error:

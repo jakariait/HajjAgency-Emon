@@ -47,7 +47,7 @@ const Testimonials = () => {
   }
 
   return (
-    <section className="pt-10 pb-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50">
+    <section className=" pt-10 pb-20 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50">
       {/* Decorative Top Element - Reusing a simplified version from Service.js */}
       <div className="flex items-center justify-center gap-3 mb-6">
         <div className="w-12 h-px bg-gradient-to-r from-transparent to-emerald-400"></div>
@@ -82,7 +82,7 @@ const Testimonials = () => {
         breakpoints={{
           768: { slidesPerView: 3 },
         }}
-        className="px-4"
+        className="px-4 xl:container xl:mx-auto"
       >
         {testimonials.map((t) => (
           <SwiperSlide key={t._id}>

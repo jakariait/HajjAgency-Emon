@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import Link from "next/link";
-import { FaEye } from "react-icons/fa";
-import ProductGallery from "./ProductGallery.js";
-import ProductAddToCart from "./ProductAddToCart.js";
 import BuyNowButton from "./BuyNowButton.js";
 import ImageComponentWithCompression from "./ImageComponent";
 
@@ -58,7 +49,7 @@ const ProductList = ({ products }) => {
         >
           {/*Product Display Section*/}
           {products.map((product) => (
-            <div key={product.slug} className="relative">
+            <div key={product.slug} className="relative ">
               <Link href={`/product/${product.slug}`}>
                 {/*With Compression*/}
                 <ImageComponentWithCompression
@@ -99,90 +90,48 @@ const ProductList = ({ products }) => {
                 {/*Discount Price*/}
                 {product.variants?.length
                   ? product.variants[0].discount > 0 && (
-                  <div className="text-red-800">
-                    Tk. {formatPrice(Number(product.variants[0].discount))}
-                  </div>
-                )
+                      <div className="text-red-800">
+                        Tk. {formatPrice(Number(product.variants[0].discount))}
+                      </div>
+                    )
                   : product.finalDiscount > 0 && (
-                  <div className="text-red-800">
-                    Tk. {formatPrice(Number(product.finalDiscount))}
-                  </div>
-                )}
+                      <div className="text-red-800">
+                        Tk. {formatPrice(Number(product.finalDiscount))}
+                      </div>
+                    )}
               </div>
 
               {/* Discount Percentage */}
               <div className="absolute top-1 z-10">
                 {product.variants?.length > 0
                   ? product.variants[0].discount > 0 && (
-                  <span className="bg-red-400 px-2 py-1 text-white">
+                      <span className="bg-red-400 px-2 py-1 text-white">
                         -
-                    {calculateDiscountPercentage(
-                      product.variants[0].price,
-                      product.variants[0].discount,
-                    )}
-                    %
+                        {calculateDiscountPercentage(
+                          product.variants[0].price,
+                          product.variants[0].discount,
+                        )}
+                        %
                       </span>
-                )
+                    )
                   : product.finalDiscount > 0 && (
-                  <span className="bg-red-400 px-2 py-1 text-white">
+                      <span className="bg-red-400 px-2 py-1 text-white">
                         -
-                    {calculateDiscountPercentage(
-                      product.finalPrice,
-                      product.finalDiscount,
-                    )}
-                    %
+                        {calculateDiscountPercentage(
+                          product.finalPrice,
+                          product.finalDiscount,
+                        )}
+                        %
                       </span>
-                )}
+                    )}
               </div>
 
               <div className={"py-3 flex gap-2 justify-center items-center"}>
                 {/*<BuyNowButton product={product} isAddToCart={true} />*/}
                 <BuyNowButton product={product} />
               </div>
-
-              {/* Quick View Button */}
-              <div className="absolute top-1 right-0 z-10 bg-white rounded-full flex justify-center items-center">
-                <button
-                  onClick={() => handleOpen(product)} // Pass the product to set the state
-                  className="p-2 cursor-pointer"
-                  aria-label="Open"
-                >
-                  <FaEye />
-                </button>
-              </div>
             </div>
           ))}
-
-          {/* Quick View Modal */}
-          {selectedProduct && (
-            <Dialog
-              open={Boolean(selectedProduct)}
-              onClose={handleClose}
-              maxWidth="md"
-              fullWidth
-            >
-              <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                  Close
-                </Button>
-              </DialogActions>
-              <DialogContent>
-                <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
-                  <ProductGallery
-                    images={selectedProduct.images}
-                    discount={calculateDiscountPercentage(
-                      selectedProduct.finalPrice,
-                      selectedProduct.finalDiscount,
-                    )}
-                    zoom={false}
-                  />
-                  <div>
-                    <ProductAddToCart product={selectedProduct} />
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          )}
         </div>
       )}
     </div>

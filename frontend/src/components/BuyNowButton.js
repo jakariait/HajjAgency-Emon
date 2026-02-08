@@ -64,7 +64,7 @@ const BuyNowButton = ({ product, isAddToCart = false }) => {
     <>
       <button
         onClick={handleOpen}
-        className="primaryBgColor accentTextColor w-full px-1 py-1 md:py-1 rounded cursor-pointer"
+        className="bg-primary text-accent w-full px-1 py-1 md:py-1 rounded cursor-pointer"
       >
         <div className="flex items-center justify-center gap-4">
           {isAddToCart ? <FaCartArrowDown /> : <FaCreditCard />}
@@ -114,30 +114,6 @@ const BuyNowButton = ({ product, isAddToCart = false }) => {
             </div>
           )}
 
-          {/* Size Variants */}
-          {product.variants?.length > 0 && (
-            <div className="flex gap-4 items-center mt-4">
-              <h2 className="text-lg">Weight:</h2>
-              <div className="flex gap-2 flex-wrap">
-                {product.variants
-                  .filter((variant) => variant && variant.size)
-                  .map((variant) => (
-                    <button
-                      key={variant.size.name}
-                      onClick={() => handleSizeChange(variant.size.name)}
-                      className={`px-2 py-1 rounded transition-all cursor-pointer ${
-                        selectedVariant?.size.name === variant.size.name
-                          ? "primaryBgColor text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      {variant.size.name}
-                    </button>
-                  ))}
-              </div>
-            </div>
-          )}
-
           {/* Quantity */}
           <div className="flex gap-4 items-center mt-4">
             <h2 className="text-lg">Quantity</h2>
@@ -157,17 +133,6 @@ const BuyNowButton = ({ product, isAddToCart = false }) => {
                 <FaPlus />
               </button>
             </div>
-          </div>
-
-          {/* Stock Info */}
-          <div className="mt-4">
-            {selectedVariant?.stock === 0 || product.finalStock === 0 ? (
-              <span className="text-red-600 font-semibold">Stock Out</span>
-            ) : selectedVariant?.stock < 20 || product.finalStock < 20 ? (
-              <span className="primaryTextColor font-semibold">
-                Only {selectedVariant?.stock || product.finalStock} left!
-              </span>
-            ) : null}
           </div>
         </DialogContent>
         <DialogActions>
