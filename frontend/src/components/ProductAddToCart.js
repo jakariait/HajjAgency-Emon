@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaShoppingCart } from "react-icons/fa";
 import { FiMinus } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -44,8 +44,8 @@ const ProductAddToCart = ({ product }) => {
               selectedVariant?.discount > 0
                 ? selectedVariant.discount
                 : selectedVariant?.price ||
-                product.finalDiscount ||
-                product.finalPrice,
+                  product.finalDiscount ||
+                  product.finalPrice,
             quantity,
           },
         ],
@@ -81,174 +81,212 @@ const ProductAddToCart = ({ product }) => {
   };
 
   return (
-    <div>
+    <div className="space-y-6">
+      {/* Product Title */}
       <div>
-        <div className="flex flex-col gap-3 md:col-span-4 lg:col-span-3 xl:col-span-4 pt-4 md:pt-0">
-          {/*<LiveStatsNotification />*/}
-          <h2 className="text-xl">{product.name}</h2>
+        <h1 className="text-2xl md:text-3xl font-bold text-emerald-900 mb-2">
+          {product.name}
+        </h1>
+        <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-amber-500 rounded-full"></div>
+      </div>
 
-          {/* Without Variant Price Display */}
-          {!product.variants?.length && (
-            <div className="flex gap-2 items-center">
-              {product.finalDiscount > 0 ? (
-                <>
-                  <div className="line-through">
-                    Tk. {formatPrice(Number(product.finalPrice))}
-                  </div>
-                  <div className="text-red-800">
-                    Tk. {formatPrice(Number(product.finalDiscount))}
-                  </div>
-                  <div>
-                    You Save: Tk{" "}
-                    {formatPrice(
-                      Number(product.finalPrice - product.finalDiscount),
-                    )}
-                  </div>
-                </>
-              ) : (
-                <div className="text-black font-medium">
-                  Tk. {formatPrice(Number(product.finalPrice))}
+      {/* Price Section */}
+      <div className="relative bg-gradient-to-br from-emerald-50 to-amber-50 rounded-xl p-4 border-2 border-emerald-200/50">
+        {/* Decorative corners */}
+        <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-emerald-400/40 rounded-tl"></div>
+        <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-amber-400/40 rounded-br"></div>
+
+        {/* Without Variant Price Display */}
+        {!product.variants?.length && (
+          <div className="flex flex-wrap gap-3 items-center">
+            {product.finalDiscount > 0 ? (
+              <>
+                <div className="text-lg text-gray-500 line-through">
+                  ৳ {formatPrice(Number(product.finalPrice))}
                 </div>
-              )}
-            </div>
-          )}
-
-          {/*With Variant Price Display */}
-          {selectedVariant && (
-            <div className="flex gap-2">
-              {selectedVariant.discount > 0 ? (
-                <>
-                  <div className="line-through">
-                    Tk. {formatPrice(Number(selectedVariant.price))}
-                  </div>
-                  <div className="text-red-800">
-                    Tk. {formatPrice(Number(selectedVariant.discount))}
-                  </div>
-                  <div>
-                    You Save: Tk{" "}
-                    {formatPrice(
-                      Number(selectedVariant.price - selectedVariant.discount),
-                    )}
-                  </div>
-                </>
-              ) : (
-                <div className="text-black">
-                  Tk. {formatPrice(Number(selectedVariant.price))}
+                <div className="text-2xl md:text-3xl font-bold text-red-600">
+                  ৳ {formatPrice(Number(product.finalDiscount))}
                 </div>
-              )}
-            </div>
-          )}
-
-          {/* Reward Points */}
-          {product.rewardPoints && (
-            <div>Purchase & Earn: {product.rewardPoints} points.</div>
-          )}
-
-          {/* Stock */}
-          <div>
-            {selectedVariant?.stock === 0 || product.finalStock === 0 ? (
-              <span className="text-red-600 font-semibold">Stock Out</span>
-            ) : selectedVariant?.stock < 20 || product.finalStock < 20 ? (
-              <span className="primaryTextColor font-semibold">
-                Hurry up! Only {selectedVariant?.stock || product.finalStock}{" "}
-                left
-              </span>
-            ) : null}
-          </div>
-
-          {/* With Variant Price Display */}
-          {product.variants?.length > 0 && (
-            <div className={"flex gap-4 items-center"}>
-              <h2 className="text-lg">Size</h2>
-              <div className="flex gap-2 flex-wrap justify-center ">
-                {product.variants.map((variant) => (
-                  <button
-                    key={variant.size.name}
-                    onClick={() => handleSizeChange(variant.size.name)}
-                    className={`px-2 py-1 rounded transition-all cursor-pointer  ${
-                      selectedVariant?.size.name === variant.size.name
-                        ? "primaryBgColor text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    {variant.size.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/*Cart Quantity, Add to Cart and Wish List Button */}
-          <div
-            className={
-              "flex gap-2  md:gap-6 xl:gap-15 items-center justify-baseline mt-2"
-            }
-          >
-            {/*Cart Quantity Button*/}
-            <div className={"rounded flex items-center justify-between"}>
-              <button
-                className={
-                  "primaryBgColor accentTextColor px-2 py-2 md:py-3 rounded-l cursor-pointer"
-                }
-                onClick={() => handleQuantityChange("decrease")}
-                aria-label="Quantity decrease"
-              >
-                <FiMinus />
-              </button>
-              <span className={"px-3 py-1 md:py-2 bg-gray-200"}>
-                {quantity}
-              </span>
-              <button
-                className={
-                  "primaryBgColor accentTextColor px-2 py-2 md:py-3 rounded-r cursor-pointer"
-                }
-                onClick={() => handleQuantityChange("increase")}
-                disabled={quantity >= MAX_QUANTITY} // Disable when limit is reached
-                aria-label="Quantity increase"
-              >
-                <FaPlus />
-              </button>
-            </div>
-            {/*Add to Cart Button*/}
-            {selectedVariant?.stock === 0 || product.finalStock === 0 ? (
-              <button className="text-red-600 font-semibold" disabled>
-                Stock Out
-              </button>
+                <div className="ml-auto px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                  সাশ্রয়: ৳{" "}
+                  {formatPrice(
+                    Number(product.finalPrice - product.finalDiscount),
+                  )}
+                </div>
+              </>
             ) : (
-              <motion.button
-                className="primaryBgColor accentTextColor px-2 py-1 md:py-2 rounded flex-grow cursor-pointer"
-                // animate={{ scale: [1, 1.08, 1] }} // Scale animation
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                onClick={handleAddToCart}
-              >
-                ADD TO CART
-              </motion.button>
+              <div className="text-2xl md:text-3xl font-bold text-emerald-700">
+                ৳ {formatPrice(Number(product.finalPrice))}
+              </div>
             )}
           </div>
-          {/*Cash On Delivery Order Button*/}
-          {selectedVariant?.stock === 0 || product.finalStock === 0 ? null : (
-            <motion.button
-              className="primaryBgColor accentTextColor px-2 py-1 md:py-2 rounded cursor-pointer"
-              // animate={{ scale: [1, 1.05, 1] }} // Scale animation
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              onClick={() => {
-                addToCart(product, quantity, selectedVariant);
-                router.push("/checkout");
-              }}
-            >
-              Order with Cash on Delivery
-            </motion.button>
-          )}
-        </div>
+        )}
+
+        {/* With Variant Price Display */}
+        {selectedVariant && (
+          <div className="flex flex-wrap gap-3 items-center">
+            {selectedVariant.discount > 0 ? (
+              <>
+                <div className="text-lg text-gray-500 line-through">
+                  ৳ {formatPrice(Number(selectedVariant.price))}
+                </div>
+                <div className="text-2xl md:text-3xl font-bold text-red-600">
+                  ৳ {formatPrice(Number(selectedVariant.discount))}
+                </div>
+                <div className="ml-auto px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                  সাশ্রয়: ৳{" "}
+                  {formatPrice(
+                    Number(selectedVariant.price - selectedVariant.discount),
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="text-2xl md:text-3xl font-bold text-emerald-700">
+                ৳ {formatPrice(Number(selectedVariant.price))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* Stock Status */}
+      {selectedVariant?.stock === 0 || product.finalStock === 0 ? (
+        <div className="flex items-center gap-3 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+          <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white text-xl">
+            ⚠️
+          </div>
+          <div>
+            <p className="font-bold text-red-700 text-lg">স্টক শেষ</p>
+            <p className="text-sm text-red-600">এই পণ্যটি বর্তমানে নেই</p>
+          </div>
+        </div>
+      ) : selectedVariant?.stock < 20 || product.finalStock < 20 ? (
+        <div className="flex items-center gap-3 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl animate-pulse-slow">
+          <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white text-xl">
+            ⏰
+          </div>
+          <div>
+            <p className="font-bold text-amber-700 text-lg">দ্রুত করুন!</p>
+            <p className="text-sm text-amber-600">
+              মাত্র {selectedVariant?.stock || product.finalStock}টি বাকি আছে
+            </p>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Quantity & Add to Cart - Compact Version */}
+      <div className="space-y-3">
+        {/* Compact Quantity & Cart Section */}
+        {selectedVariant?.stock === 0 || product.finalStock === 0 ? (
+          <button
+            className="w-full px-6 py-3 bg-gray-300 text-gray-500 rounded-xl font-bold cursor-not-allowed"
+            disabled
+          >
+            স্টক শেষ
+          </button>
+        ) : (
+          <div className="relative bg-white border-2 border-emerald-200/50 rounded-xl p-4 shadow-md">
+            {/* Decorative top border */}
+            <div className="absolute top-0 left-0 right-0 h-1 rounded-t-xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-amber-400 to-emerald-400"></div>
+            </div>
+
+            {/* Quantity Controls - Inline */}
+            <div className="flex items-center justify-between gap-4 mb-3">
+              <span className="text-sm font-semibold text-emerald-900">
+                পরিমাণ:
+              </span>
+              <div className="flex items-center bg-emerald-50 rounded-lg overflow-hidden border border-emerald-200">
+                <button
+                  className="px-3 py-1.5 bg-emerald-500 text-white hover:bg-emerald-600 transition-colors disabled:opacity-50"
+                  onClick={() => handleQuantityChange("decrease")}
+                  disabled={quantity <= 1}
+                  aria-label="Quantity decrease"
+                >
+                  <FiMinus className="w-4 h-4" />
+                </button>
+                <div className="px-4 py-1.5 font-bold text-emerald-900 min-w-[50px] text-center">
+                  {quantity}
+                </div>
+                <button
+                  className="px-3 py-1.5 bg-emerald-500 text-white hover:bg-emerald-600 transition-colors disabled:opacity-50"
+                  onClick={() => handleQuantityChange("increase")}
+                  disabled={quantity >= MAX_QUANTITY}
+                  aria-label="Quantity increase"
+                >
+                  <FaPlus className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Add to Cart Button - Full Width */}
+            <motion.button
+              className="relative cursor-pointer w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg font-bold shadow-md hover:shadow-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 overflow-hidden group"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              onClick={handleAddToCart}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+              <div className="relative flex items-center justify-center gap-2">
+                <FaShoppingCart className="w-5 h-5" />
+                <span>কার্টে যোগ করুন</span>
+              </div>
+            </motion.button>
+
+            {/* Decorative corners */}
+            <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-emerald-300/40 rounded-bl"></div>
+            <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-amber-300/40 rounded-br"></div>
+          </div>
+        )}
+      </div>
+
+      {/* Cash on Delivery Button - Compact */}
+      {selectedVariant?.stock === 0 || product.finalStock === 0 ? null : (
+        <motion.button
+          className="relative cursor-pointer w-full px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 overflow-hidden group"
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          onClick={() => {
+            addToCart(product, quantity, selectedVariant);
+            router.push("/checkout");
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+          <div className="relative flex items-center justify-center gap-2">
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <span>ক্যাশ অন ডেলিভারি</span>
+          </div>
+        </motion.button>
+      )}
+
+      {/* Custom Styles */}
+      <style jsx>{`
+        @keyframes pulse-slow {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
